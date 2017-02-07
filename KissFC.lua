@@ -275,6 +275,8 @@ local KISS_GET_VTX_CONFIG       = 0x45
 local KISS_SET_VTX_CONFIG   	= 0x46
 local KISS_GET_FILTERS       	= 0x47
 local KISS_SET_FILTERS   		= 0x48
+local KISS_GET_ALARMS       	= 0x49
+local KISS_SET_ALARMS   		= 0x4A
 
 local REQ_TIMEOUT = 200 -- 1000ms request timeout
 
@@ -371,7 +373,24 @@ local function getWriteValuesRates(values)
    return ret
 end
 
-local SetupPages = {
+local function postReadAlarms(page)
+   local alarms = {}
+   alarms[1] = 100 * (bit32.lshift(page.values[1], 8) + page.values[2])
+   alarms[2] = bit32.lshift(page.values[3], 8) + page.values[4]
+   page.values = alarms
+end
+
+local function getWriteValuesAlarms(values)
+   local ret = {}
+   local tmp = bit32.band(math.floor(values[1]/100), 0xFFFF)
+   ret[1] = bit32.band(bit32.rshift(tmp, 8), 0xFF)
+   ret[2] = bit32.band(tmp, 0xFF)
+   ret[3] = bit32.band(bit32.rshift(values[2], 8), 0xFF)
+   ret[4] = bit32.band(values[2], 0xFF)
+   return ret
+end
+
+SetupPages = {
    {
       title = "PIDs",
       text = {
@@ -445,16 +464,29 @@ local SetupPages = {
       write = KISS_SET_FILTERS,
       postRead = postReadFilters,
       getWriteValues = getWriteValuesFilters
-   },   
+   },
+   {
+      title = "Alarms",
+      text = {},
+      fields = {
+         -- Alarms
+         { t = "VBat",    x = 15,  y = 25, sp = 30, i=1, min=0, max=26000, prec=1 },
+         { t = "mAH",     x = 120, y = 25, sp = 30, i=2, min=0, max=26000, inc=10 }
+      },
+      read  = KISS_GET_ALARMS,
+      write = KISS_SET_ALARMS,
+      postRead = postReadAlarms,
+      getWriteValues = getWriteValuesAlarms
+   },  
    {
       title = "VTX",
       text = {},
       fields = {
          -- VTX
-         { t = "Band",    x = 15,  y = 25, sp = 60, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
-         { t = "Channel", x = 110, y = 25, sp = 70, i=3, min=1, max=8 },
-         { t = "Low Power",   x = 15,  y = 38, sp = 60, i=4, min=0, max=600 },
-         { t = "High Power",   x = 110,  y = 38, sp = 70, i=5, min=0, max=600 }
+         { t = "Band",    	   x = 15,  y = 25, sp = 60, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
+         { t = "Channel",      x = 110, y = 25, sp = 70, i=3, min=1, max=8 },
+         { t = "Low Power",    x = 15,  y = 38, sp = 60, i=4, min=0, max=600 },
+         { t = "High Power",   x = 110, y = 38, sp = 70, i=5, min=0, max=600 }
       },
       read  = KISS_GET_VTX_CONFIG,
       write = KISS_SET_VTX_CONFIG,
@@ -622,7 +654,7 @@ local function drawScreen(page,page_locked)
          end
          
           if f.prec ~= nil then
-          	val = formatKissFloat(val, f.prec)
+          	val = formatKissFloat(val, f.prec, f.base)
           end
           
          lcd.drawText(f.x + spacing, f.y, val, text_options)
@@ -655,6 +687,10 @@ local function incValue(inc)
    local tmpInc = inc
    if field.prec ~= nil then
       tmpInc = tmpInc * 10^(3-field.prec)
+   end
+   
+   if field.inc ~= nil then
+   	  tmpInc = tmpInc * field.inc
    end
           
    page.values[idx] = clipValue(page.values[idx] + tmpInc, field.min or 0, field.max or 255)
