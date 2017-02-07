@@ -2,7 +2,8 @@
 -- KISS/SPORT code
 --
 -- Based on Betaflight LUA script
-
+--
+-- Kiss version by Alex Fedorov aka FedorComander
 
 -- Protocol version
 SPORT_KISS_VERSION = bit32.lshift(1,5)
@@ -47,6 +48,14 @@ local function formatKissFloat(v, d)
 	else
 		return part1
 	end
+end
+
+local function subrange(t, first, last)
+  local sub = {}
+  for i=first,last do
+    sub[#sub + 1] = t[i]
+  end
+  return sub
 end
 
 local function kissResetStats()
@@ -189,9 +198,8 @@ local function kissReceivedReply(payload)
       kissRxIdx = 1
       kissRxBuf = {}
 
-      kissRxSize = payload[idx + 1];
+      kissRxSize = payload[idx + 1] + 3
       kissRxCRC  = 0
-      idx = idx + 2
       kissStarted = true
       
       kissStartPk = kissStartPk + 1
@@ -208,28 +216,30 @@ local function kissReceivedReply(payload)
 
    while (idx <= 6) and (kissRxIdx <= kissRxSize) do
       kissRxBuf[kissRxIdx] = payload[idx]
-      kissRxCRC = kissRxCRC + payload[idx]
+      if (kissRxIdx>2) and (kissRxIdx < kissRxSize) then
+      		kissRxCRC = kissRxCRC + payload[idx]
+      end
       kissRxIdx = kissRxIdx + 1
       idx = idx + 1
    end
 
-   if idx > 6 then
+   if kissRxIdx <= kissRxSize then
       sportKissRemoteSeq = seq
       return true
    end
 
-   -- check CRC
-   -- kissRxCRC = bit32.band(kissRxCRC / kissRxSize, 0x0F)
-   
-   --if kissRxCRC ~= payload[idx] then
-   --   kissStarted = false
-   --   kissCRCErrors = kissCRCErrors + 1
-   --   return nil
-   --end
+   if kissRxSize>3 then
+   		kissRxCRC = bit32.band(math.floor(kissRxCRC / (kissRxSize-3)), 0xFF)
+   		if kissRxCRC ~= kissRxBuf[kissRxSize] then
+   	  		kissStarted = false
+   			kissCRCErrors = kissCRCErrors + 1
+   			return nil
+   		end
+   	end
 
    kissRepliesReceived = kissRepliesReceived + 1
    kissStarted = false
-   return kissRxBuf
+   return subrange(kissRxBuf, 3, kissRxSize-1)
 end
 
 local function kissPollReply()
