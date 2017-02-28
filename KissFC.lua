@@ -469,13 +469,17 @@ SetupPages = {
    {
       title = "Filters",
       text = {
-         { t = "Notch",  x = 47,  y = 14 },
+        -- { t = "Notch",  x = 47,  y = 14 },
          { t = "Center", x = 100, y = 14 },
          { t = "Cutoff", x = 150, y = 14 },
+         { t = "Notch Filter", x = 10,  y = 14 },
          { t = "Roll",  x = 10,  y = 25 },
          { t = "Pitch", x = 10,  y = 38 },
-         { t = "LPF",   x = 10,  y = 50 },
-         { t = "Yaw",   x = 110, y = 50 }
+         { t = "LPF",   x = 10,  y = 52 },
+         { t = "Yaw",   x = 110, y = 52 }
+      },
+      lines = {
+      	 { x1 = 4, y1 = 48, x2 = 190, y2 = 48 }
       },
       fields = {
          -- Filters
@@ -485,8 +489,8 @@ SetupPages = {
          { x = 35,  y = 38,  i=4, min=1, max=2, table = { "Off", "On" }},
          { x = 90,  y = 38,  i=5, min=0, max=490 },
          { x = 145, y = 38,  i=6, min=0, max=490 },
-         { x = 35,  y = 50,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
-         { x = 145, y = 50,  i=8, min=0, max=97},
+         { x = 35,  y = 52,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
+         { x = 145, y = 52,  i=8, min=0, max=97},
       },
       read  = KISS_GET_FILTERS,
       write = KISS_SET_FILTERS,
@@ -651,6 +655,13 @@ local function drawScreen(page,page_locked)
    for i=1,#(page.text) do
       local f = page.text[i]
       lcd.drawText(f.x, f.y, f.t, text_options) 
+   end
+   
+   if page.lines ~= nil then
+   	for i=1,#(page.lines) do
+    	  local f = page.lines[i]
+      	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
+   	end
    end
    
    for i=1,#(page.fields) do
