@@ -734,7 +734,7 @@ local function incValue(inc)
 end
 
 local function drawMenu()
-   local x = 40
+   local x = 6
    local y = 12
    local w = 120
    local h = #(menuList) * 8 + 6
@@ -839,16 +839,16 @@ local function run(event)
    -- do we have valid telemetry data?
    if getValue("RSSI") == 0 then
       -- No!
-      lcd.drawText(70,55,"No telemetry",BLINK)
+      lcd.drawText(35,55,"No telemetry",BLINK)
       invalidatePages()
    end
 
    if gState == MENU_DISP then
       drawMenu()
    elseif gState == PAGE_SAVING then
-      lcd.drawFilledRectangle(40,12,120,30,ERASE)
-      lcd.drawRectangle(40,12,120,30,SOLID)
-      lcd.drawText(64,18,"Saving...", DBLSIZE + BLINK)
+      lcd.drawFilledRectangle(6,12,120,30,ERASE)
+      lcd.drawRectangle(6,12,120,30,SOLID)
+      lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
    end
 
    processKissReply(kissPollReply())
