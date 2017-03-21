@@ -277,8 +277,8 @@ end
 -- End of KISS/SPORT code
 --
 
-local KISS_GET_RATES    		= 0x41
-local KISS_SET_RATES 			= 0x42
+local KISS_GET_RATES    		= 0x4D
+local KISS_SET_RATES 			= 0x4E
 local KISS_GET_PIDS     		= 0x43
 local KISS_SET_PIDS     		= 0x44
 local KISS_GET_VTX_CONFIG       = 0x45
