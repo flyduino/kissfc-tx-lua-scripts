@@ -502,8 +502,8 @@ SetupPages = {
       text = {},
       fields = {
          -- Alarms
-         { t = "VBat",    x = 15,  y = 25, sp = 30, i=1, min=0, max=26000, prec=1 },
-         { t = "mAH",     x = 120, y = 25, sp = 30, i=2, min=0, max=26000, inc=10 }
+         { t = "VBat",    x = 100,  y = 96, sp = 60, i=1, min=0, max=26000, prec=1 },
+         { t = "mAH",     x = 250, y = 96, sp = 60, i=2, min=0, max=26000, inc=10 }
       },
       read  = KISS_GET_ALARMS,
       write = KISS_SET_ALARMS,
