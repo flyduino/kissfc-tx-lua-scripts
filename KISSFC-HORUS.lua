@@ -538,9 +538,9 @@ local function saveSettings(new)
    local page = SetupPages[currentPage]
    if page.values then
       if page.getWriteValues then
-         mspSendRequest(page.write,page.getWriteValues(page.values))
+         kissSendRequest(page.write,page.getWriteValues(page.values))
       else
-         mspSendRequest(page.write,page.values)
+         kissSendRequest(page.write,page.values)
       end
       saveTS = getTime()
       if gState == PAGE_SAVING then
