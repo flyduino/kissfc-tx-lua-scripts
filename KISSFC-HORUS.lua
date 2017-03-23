@@ -515,10 +515,10 @@ SetupPages = {
       text = {},
       fields = {
          -- VTX
-         { t = "Band",    	   x = 15,  y = 25, sp = 60, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
-         { t = "Channel",      x = 110, y = 25, sp = 70, i=3, min=1, max=8 },
-         { t = "Low Power",    x = 15,  y = 38, sp = 60, i=4, min=0, max=600 },
-         { t = "High Power",   x = 110, y = 38, sp = 70, i=5, min=0, max=600 }
+         { t = "Band",    	   x = 35,  y = 96, sp = 100, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
+         { t = "Channel",      x = 210, y = 96, sp = 120, i=3, min=1, max=8 },
+         { t = "Low Power",    x = 35,  y = 158, sp = 100, i=4, min=0, max=600 },
+         { t = "High Power",   x = 210, y = 158, sp = 120, i=5, min=0, max=600 }
       },
       read  = KISS_GET_VTX_CONFIG,
       write = KISS_SET_VTX_CONFIG,
