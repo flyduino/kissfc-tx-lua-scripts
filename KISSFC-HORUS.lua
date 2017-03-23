@@ -538,9 +538,9 @@ local function saveSettings(new)
    local page = SetupPages[currentPage]
    if page.values then
       if page.getWriteValues then
-         kissSendRequest(page.write,page.getWriteValues(page.values))
+         mspSendRequest(page.write,page.getWriteValues(page.values))
       else
-         kissSendRequest(page.write,page.values)
+         mspSendRequest(page.write,page.values)
       end
       saveTS = getTime()
       if gState == PAGE_SAVING then
@@ -739,20 +739,24 @@ local function incValue(inc)
 end
 
 local function drawMenu()
-   local x = 40
-   local y = 12
-   local w = 120
-   local h = #(menuList) * 8 + 6
-   lcd.drawFilledRectangle(x,y,w,h,ERASE)
-   lcd.drawRectangle(x,y,w-1,h-1,SOLID)
-   lcd.drawText(x+4,y+3,"Menu:")
+   local x = 120
+   local y = 100
+   local w = 200
+   local x_offset = 68
+   local h_line = 20
+   local h_offset = 6
+   local h = #(menuList) * h_line + h_offset*2
+
+   lcd.drawFilledRectangle(x,y,w,h,backgroundFill)
+   lcd.drawRectangle(x,y,w-1,h-1,foregroundColor)
+   lcd.drawText(x+h_line/2,y+h_offset,"Menu:",globalTextOptions)
 
    for i,e in ipairs(menuList) do
+      local text_options = globalTextOptions
       if menuActive == i then
-         lcd.drawText(x+36,y+(i-1)*8+3,e.t,INVERS)
-      else
-         lcd.drawText(x+36,y+(i-1)*8+3,e.t)
+         text_options = text_options + INVERS
       end
+      lcd.drawText(x+x_offset,y+(i-1)*h_line+h_offset,e.t,text_options)
    end
 end
 
