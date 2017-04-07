@@ -4,6 +4,7 @@
 -- Based on Betaflight LUA script
 --
 -- Kiss version by Alex Fedorov aka FedorComander
+-- TPA added by Alex Wolf aka awolf78 or Airwolf
 
 -- Protocol version
 SPORT_KISS_VERSION = bit32.lshift(1,5)
@@ -287,6 +288,8 @@ local KISS_GET_FILTERS       	= 0x47
 local KISS_SET_FILTERS   		= 0x48
 local KISS_GET_ALARMS       	= 0x49
 local KISS_SET_ALARMS   		= 0x4A
+local KISS_GET_TPA				= 0x4B
+local KISS_SET_TPA				= 0x4C
 
 local REQ_TIMEOUT = 200 -- 1000ms request timeout
 
@@ -386,6 +389,31 @@ local function getWriteValuesRates(values)
    for i=1,9 do 
         ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
    		ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
+   end
+   return ret
+end
+
+local function postReadTPA(page)
+   local tpa = {}
+   for i=1,3 do
+		tpa[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
+   end
+   tpa[4] = page.values[7] + 1
+   for i=5,10 do
+		tpa[i] = page.values[i + 3]
+   end
+   page.values = tpa
+end
+
+local function getWriteValuesTPA(values)
+   local ret = {}
+   for i=1,3 do
+	   ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
+	   ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
+   end
+   ret[7] = bit32.band(values[4]-1, 0xFF)
+   for i=5,10 do
+	   ret[i+3] = bit32.band(values[i], 0xFF)
    end
    return ret
 end
@@ -496,12 +524,45 @@ SetupPages = {
       getWriteValues = getWriteValuesFilters
    },
    {
+      title = "TPA",
+      text = {
+		 { t = "P", 	x = 45, y = 10 },
+         { t = "I", 	x = 78, y = 10 },
+         { t = "D", 	x = 107,y = 10 },
+         { t = "TPA",  	x = 3,  y = 20 },
+		 { t = "0",  	x = 35,  y = 43 },
+		 { t = "100",   x = 105, y = 43 },
+		 { t = "Thr%",  x = 3,  y = 43 },
+		 { t = "Inf%",  x = 3, y = 53 },
+	  },
+	  lines = {
+      	 { x1 = 1, y1 = 30, x2 = 125, y2 = 30 }
+      },
+      fields = {
+         -- TPA
+         { x = 20,  y = 20, i=1, max=900, prec=2 },
+         { x = 53,  y = 20, i=2, max=900, prec=2 },
+         { x = 80,  y = 20, i=3, max=900, prec=2 },
+		 { t = "Custom TPA", x = 3,  y = 33, sp=65, i=4, min=1, max=2, table = { "Off", "On" } },
+		 { x = 38,   y = 43, i=5, max=100},
+		 { x = 61,   y = 43, i=6, max=100},
+		 { x = 15,   y = 53, i=7, max=100},
+		 { x = 38,   y = 53, i=8, max=100},
+		 { x = 61,   y = 53, i=9, max=100},
+		 { x = 85,   y = 53, i=10,max=100},
+      },
+      read  = KISS_GET_TPA,
+      write = KISS_SET_TPA,
+      postRead = postReadTPA,
+      getWriteValues = getWriteValuesTPA
+   },
+   {
       title = "Alarms",
       text = {},
       fields = {
          -- Alarms
-         { t = "VBat",    x = 15,  y = 27, sp = 70, i=1, min=0, max=26000, prec=1 },
-         { t = "mAH",     x = 15,  y = 40, sp = 70, i=2, min=0, max=26000, inc=10 }
+         { t = "VBat",    x = 15,  y = 27, sp = 50, i=1, min=0, max=26000, prec=1, suff = " V" },
+         { t = "mAH",     x = 15,  y = 40, sp = 50, i=2, min=0, max=26000, inc=10, suff = " mAh" }
       },
       read  = KISS_GET_ALARMS,
       write = KISS_SET_ALARMS,
@@ -515,8 +576,8 @@ SetupPages = {
          -- VTX
          { t = "Band",    	   x = 15,  y = 14, sp = 70, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
          { t = "Channel",      x = 15,  y = 27, sp = 70, i=3, min=1, max=8 },
-         { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=600 },
-         { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=600 }
+         { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=600, suff = " mW" },
+         { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=600, suff = " mW" }
       },
       read  = KISS_GET_VTX_CONFIG,
       write = KISS_SET_VTX_CONFIG,
@@ -693,7 +754,9 @@ local function drawScreen(page,page_locked)
           if f.prec ~= nil then
           	val = formatKissFloat(val, f.prec, f.base)
           end
-          
+         if f.suff ~= nil then
+			val = val .. f.suff
+		 end
          lcd.drawText(f.x + spacing, f.y, val, text_options)
       else
          lcd.drawText(f.x + spacing, f.y, "---", text_options)
