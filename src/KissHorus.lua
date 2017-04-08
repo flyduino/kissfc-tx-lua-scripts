@@ -1,3 +1,5 @@
+local RADIO = "HORUS"
+
 SetupPages = {
    {
       title = "PIDs",
@@ -155,3 +157,6 @@ local function drawMenu()
    end
 end
 
+local function getDefaultTextOptions() 
+	return TEXT_COLOR
+end

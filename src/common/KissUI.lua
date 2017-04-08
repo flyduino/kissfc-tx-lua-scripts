@@ -1,3 +1,4 @@
+
 local currentPage = 1
 local currentLine = 1
 local saveTS = 0
@@ -125,7 +126,11 @@ local function drawScreen(page,page_locked)
  
    for i=1,#(page.text) do
       local f = page.text[i]
-      lcd.drawText(f.x, f.y, f.t, text_options) 
+      if f.to == nil then
+         lcd.drawText(f.x, f.y, f.t, getDefaultTextOptions())
+      else
+         lcd.drawText(f.x, f.y, f.t, f.to)
+      end
    end
    
    if page.lines ~= nil then
@@ -138,7 +143,7 @@ local function drawScreen(page,page_locked)
    for i=1,#(page.fields) do
       local f = page.fields[i]
 
-      local text_options = 0
+      local text_options = getDefaultTextOptions()
       if i == currentLine then
          text_options = INVERS
          if gState == EDITING then
@@ -146,14 +151,17 @@ local function drawScreen(page,page_locked)
          end
       end
 
+	  local spacing = 20
+
       if f.t ~= nil then
-      	lcd.drawText(f.x, f.y, f.t .. ":", 0)
-      end
-      
-      -- draw some value
-      local spacing = 20
-      if f.sp ~= nil then
-         spacing = f.sp
+         lcd.drawText(f.x, f.y, f.t .. ":", getDefaultTextOptions())
+
+         -- draw some value
+         if f.sp ~= nil then
+            spacing = f.sp
+         end
+      else
+         spacing = 0
       end
 
       local idx = f.i or i
@@ -239,6 +247,11 @@ local function run(event)
       menuActive = 1
       gState = MENU_DISP
 
+   elseif EVT_PAGEUP_FIRST and (event == EVT_ENTER_LONG) then
+      menuActive = 1
+      killEnterBreak = 1
+      gState = MENU_DISP
+      
    -- menu is currently displayed
    elseif gState == MENU_DISP then
       if event == EVT_EXIT_BREAK then
@@ -248,12 +261,23 @@ local function run(event)
       elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT then
          incMenu(1)
       elseif event == EVT_ENTER_BREAK then
-         gState = PAGE_DISPLAY
-         menuList[menuActive].f()
+      	if RADIO == "HORUS" then
+      		if killEnterBreak == 1 then
+            	killEnterBreak = 0
+         	else
+            	gState = PAGE_DISPLAY
+            	menuList[menuActive].f()
+         	end
+      	else
+         	gState = PAGE_DISPLAY
+         	menuList[menuActive].f()
+        end 
       end
    -- normal page viewing
    elseif gState <= PAGE_DISPLAY then
-      if event == EVT_MENU_BREAK then
+   	  if event == EVT_PAGEUP_FIRST then
+         incPage(-1)
+      elseif event == EVT_MENU_BREAK then
          incPage(1)
       elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT then
          incLine(-1)

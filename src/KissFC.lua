@@ -1,3 +1,5 @@
+local RADIO = "TARANIS"
+
 SetupPages = {
    {
       title = "PIDs",
@@ -150,3 +152,6 @@ local function drawMenu()
    end
 end
 
+local function getDefaultTextOptions() 
+	return 0
+end

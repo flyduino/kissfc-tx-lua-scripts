@@ -4,7 +4,7 @@ VERSION = "0.2"
 lua=KissFC.lua KissX7.lua KissHorus.lua
 
 .PHONY: all
-all: $(lua) 
+all: clean $(lua) 
 
 KissFC.lua: 
 	cat src/common/KissProtocol.lua src/KissFC.lua src/common/KissUI.lua > KissFC.lua

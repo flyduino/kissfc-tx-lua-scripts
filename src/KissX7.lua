@@ -1,3 +1,5 @@
+local RADIO = "X7"
+
 SetupPages = {
    {
       title = "PIDs",
@@ -148,3 +150,6 @@ local function drawMenu()
    end
 end
 
+local function getDefaultTextOptions() 
+	return 0
+end
