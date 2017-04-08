@@ -320,7 +320,7 @@ local function run(event)
    end
 
    if gState == MENU_DISP then
-      drawMenu()
+      drawMenu(menuList)
    elseif gState == PAGE_SAVING then
      drawSaving()
    end
