@@ -120,12 +120,12 @@ SetupPages = {
    }
 }
 
-local drawScreenTitle = function(screen_title)
+local drawScreenTitle = function(screen_title, currentPage)
 	lcd.drawScreenTitle('Kiss Setup:  '..screen_title,currentPage,#(SetupPages))
 end
 
 local drawTelemetry = function()
-	lcd.drawText(35,55,"No telemetry",BLINK)
+	lcd.drawText(75,55,"No telemetry",BLINK)
 end
 
 local drawSaving = function() 

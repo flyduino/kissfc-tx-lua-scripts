@@ -118,7 +118,7 @@ SetupPages = {
    }
 }
 
-local drawScreenTitle = function(screen_title)
+local drawScreenTitle = function(screen_title, currentPage)
      lcd.drawScreenTitle('Kiss Setup:  '..screen_title,currentPage,#(SetupPages))
 end
 

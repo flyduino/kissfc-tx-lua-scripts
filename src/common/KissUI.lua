@@ -122,7 +122,7 @@ local function drawScreen(page,page_locked)
 
    local screen_title = page.title
 
-   drawScreenTitle(screen_title)	
+   drawScreenTitle(screen_title, currentPage)	
  
    for i=1,#(page.text) do
       local f = page.text[i]
@@ -155,14 +155,13 @@ local function drawScreen(page,page_locked)
 
       if f.t ~= nil then
          lcd.drawText(f.x, f.y, f.t .. ":", getDefaultTextOptions())
-
-         -- draw some value
-         if f.sp ~= nil then
-            spacing = f.sp
-         end
-      else
-         spacing = 0
+	  end
+	  
+      -- draw some value
+      if f.sp ~= nil then
+          spacing = f.sp
       end
+     
 
       local idx = f.i or i
       if page.values and page.values[idx] then

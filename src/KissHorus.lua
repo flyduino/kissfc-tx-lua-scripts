@@ -120,7 +120,7 @@ SetupPages = {
    }
 }
 
-local drawScreenTitle = function (title)
+local drawScreenTitle = function(title, currentPage)
 	lcd.drawFilledRectangle(0, 0, LCD_W, 30, TITLE_BGCOLOR)
 	lcd.drawText(1, 5, title, MENU_TITLE_COLOR)
 end
