@@ -129,12 +129,12 @@ local drawTelemetry = function()
 end
 
 local drawSaving = function() 
-	lcd.drawFilledRectangle(6,12,120,30,ERASE)
-    lcd.drawRectangle(6,12,120,30,SOLID)
-    lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
+	lcd.drawFilledRectangle(40,12,120,30,ERASE)
+	lcd.drawRectangle(40,12,120,30,SOLID)
+	lcd.drawText(64,18,"Saving...", DBLSIZE + BLINK)
 end
 
-local function drawMenu(menuList)
+local function drawMenu(menuList, menuActive)
    local x = 40
    local y = 12
    local w = 120

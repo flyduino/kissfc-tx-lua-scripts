@@ -135,7 +135,7 @@ local drawSaving = function()
 	lcd.drawText(120+12,100+12,"Saving...",DBLSIZE + BLINK + (TEXT_COLOR))
 end
 
-local function drawMenu(menuList)
+local function drawMenu(menuList, menuActive)
    local x = 120
    local y = 100
    local w = 200
