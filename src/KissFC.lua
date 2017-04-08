@@ -155,3 +155,7 @@ end
 local function getDefaultTextOptions() 
 	return 0
 end
+
+local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
+
+
