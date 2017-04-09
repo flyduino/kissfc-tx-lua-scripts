@@ -213,8 +213,6 @@ local function incValue(inc)
    page.values[idx] = clipValue(page.values[idx] + tmpInc, field.min or 0, field.max or 255)
 end
 
-local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
-
 local lastRunTS = 0
 
 local function run(event)
@@ -322,7 +320,7 @@ local function run(event)
    end
 
    if gState == MENU_DISP then
-      drawMenu()
+      drawMenu(menuList, menuActive)
    elseif gState == PAGE_SAVING then
      drawSaving()
    end

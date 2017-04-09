@@ -71,9 +71,6 @@ SetupPages = {
          { t = "LPF",   x = 10,  y = 52 },
          { t = "Yaw",   x = 110, y = 52 }
       },
-      lines = {
-      	 { x1 = 4, y1 = 48, x2 = 190, y2 = 48 }
-      },
       fields = {
          -- Filters
          { x = 35,  y = 25,  i=1, min=1, max=2, table = { "Off", "On" }},
@@ -129,12 +126,12 @@ local drawTelemetry = function()
 end
 
 local drawSaving = function() 
-	lcd.drawFilledRectangle(6,12,120,30,ERASE)
-    lcd.drawRectangle(6,12,120,30,SOLID)
-    lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
+	lcd.drawFilledRectangle(40,12,120,30,ERASE)
+	lcd.drawRectangle(40,12,120,30,SOLID)
+	lcd.drawText(64,18,"Saving...", DBLSIZE + BLINK)
 end
 
-local function drawMenu()
+local function drawMenu(menuList, menuActive)
    local x = 40
    local y = 12
    local w = 120
@@ -155,3 +152,7 @@ end
 local function getDefaultTextOptions() 
 	return 0
 end
+
+local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
+
+

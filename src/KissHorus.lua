@@ -135,7 +135,7 @@ local drawSaving = function()
 	lcd.drawText(120+12,100+12,"Saving...",DBLSIZE + BLINK + (TEXT_COLOR))
 end
 
-local function drawMenu()
+local function drawMenu(menuList, menuActive)
    local x = 120
    local y = 100
    local w = 200
@@ -146,7 +146,7 @@ local function drawMenu()
 
    lcd.drawFilledRectangle(x,y,w,h,TEXT_BGCOLOR)
    lcd.drawRectangle(x,y,w-1,h-1,LINE_COLOR)
-   lcd.drawText(x+h_line/2,y+h_offset,"Menu:",TEXT_COLOR)
+   lcd.drawText(x+h_line/2,y+h_offset,"Menu:", TEXT_COLOR)
 
    for i,e in ipairs(menuList) do
       local text_options = TEXT_COLOR

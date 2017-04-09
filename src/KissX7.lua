@@ -123,16 +123,16 @@ local drawScreenTitle = function(screen_title, currentPage)
 end
 
 local drawTelemetry = function()
-	lcd.drawText(35,55,"No telemetry",BLINK)
+	lcd.drawText(35,55,"No telemetry", BLINK)
 end
 
 local drawSaving = function()
-	lcd.drawFilledRectangle(6,12,120,30,ERASE)
-	lcd.drawRectangle(6,12,120,30,SOLID)
+	lcd.drawFilledRectangle(6,12,120,30, ERASE)
+	lcd.drawRectangle(6,12,120,30, SOLID)
 	lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
 end
 
-local function drawMenu()
+local function drawMenu(menuList, menuActive)
    local x = 6
    local y = 12
    local w = 120
@@ -153,3 +153,7 @@ end
 local function getDefaultTextOptions() 
 	return 0
 end
+
+local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
+
+
