@@ -179,6 +179,11 @@ local function drawScreen(page,page_locked)
          lcd.drawText(f.x + spacing, f.y, "---", text_options)
       end
    end
+   
+   -- Custom drawing code
+   if page.customDraw ~= nil then
+  		page.customDraw()
+   end
 end
 
 local function clipValue(val,min,max)
