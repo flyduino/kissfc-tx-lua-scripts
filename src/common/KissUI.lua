@@ -133,7 +133,7 @@ local function drawScreen(page,page_locked)
       end
    end
    
-   if page.lines ~= nil then
+   if RADIO ~= "HORUS" and page.lines ~= nil then
    	for i=1,#(page.lines) do
     	  local f = page.lines[i]
       	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
@@ -279,7 +279,7 @@ local function run(event)
    elseif gState <= PAGE_DISPLAY then
    	  if event == EVT_PAGEUP_FIRST then
          incPage(-1)
-      elseif event == EVT_MENU_BREAK then
+      elseif event == EVT_MENU_BREAK  or event == EVT_PAGEDN_FIRST then
          incPage(1)
       elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT then
          incLine(-1)
