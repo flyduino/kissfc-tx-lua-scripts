@@ -71,9 +71,6 @@ SetupPages = {
          { t = "LPF",   x = 10,  y = 52 },
          { t = "Yaw",   x = 110, y = 52 }
       },
-      lines = {
-      	 { x1 = 4, y1 = 48, x2 = 190, y2 = 48 }
-      },
       fields = {
          -- Filters
          { x = 35,  y = 25,  i=1, min=1, max=2, table = { "Off", "On" }},
