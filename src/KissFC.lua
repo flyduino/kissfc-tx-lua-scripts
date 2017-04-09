@@ -229,7 +229,7 @@ lcd.drawRectangle(x-2,y-2,w+3,h+3,SOLID)
 lcd.drawRectangle(x,y,w-1,h-1,SOLID)
 lcd.drawText(x+4,y+3,"Menu: ", INVERS)
 
-if currentPage < 5 then e = 2 end
+if currentPage < #(SetupPages)-1 then e = 2 end
 
 for i,e in ipairs(menuList) do
 	if vTx == 2 and i == 3 then break end
