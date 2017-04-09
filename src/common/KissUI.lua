@@ -133,7 +133,7 @@ local function drawScreen(page,page_locked)
       end
    end
    
-   if RADIO ~= "HORUS" and page.lines ~= nil then
+   if page.lines ~= nil then
    	for i=1,#(page.lines) do
     	  local f = page.lines[i]
       	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
