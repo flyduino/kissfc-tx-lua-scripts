@@ -122,7 +122,7 @@ local function drawScreen(page,page_locked)
 
    local screen_title = page.title
 
-   drawScreenTitle(screen_title, currentPage)	
+   drawScreenTitle(screen_title, currentPage)   
  
    for i=1,#(page.text) do
       local f = page.text[i]
@@ -134,10 +134,10 @@ local function drawScreen(page,page_locked)
    end
    
    if page.lines ~= nil then
-   	for i=1,#(page.lines) do
-    	  local f = page.lines[i]
-      	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
-   	end
+    for i=1,#(page.lines) do
+          local f = page.lines[i]
+        lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
+    end
    end
    
    for i=1,#(page.fields) do
@@ -151,12 +151,12 @@ local function drawScreen(page,page_locked)
          end
       end
 
-	  local spacing = 20
+      local spacing = 20
 
       if f.t ~= nil then
          lcd.drawText(f.x, f.y, f.t .. ":", getDefaultTextOptions())
-	  end
-	  
+      end
+      
       -- draw some value
       if f.sp ~= nil then
           spacing = f.sp
@@ -171,7 +171,10 @@ local function drawScreen(page,page_locked)
          end
          
           if f.prec ~= nil then
-          	val = formatKissFloat(val, f.prec, f.base)
+            val = formatKissFloat(val, f.prec, f.base)
+          end
+          if f.suff ~= nil then
+            val = val .. f.suff
           end
           
          lcd.drawText(f.x + spacing, f.y, val, text_options)
@@ -182,7 +185,7 @@ local function drawScreen(page,page_locked)
    
    -- Custom drawing code
    if page.customDraw ~= nil then
-  		page.customDraw()
+        page.customDraw()
    end
 end
 
@@ -212,7 +215,7 @@ local function incValue(inc)
    end
    
    if field.inc ~= nil then
-   	  tmpInc = tmpInc * field.inc
+      tmpInc = tmpInc * field.inc
    end
           
    page.values[idx] = clipValue(page.values[idx] + tmpInc, field.min or 0, field.max or 255)
@@ -263,21 +266,21 @@ local function run(event)
       elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT then
          incMenu(1)
       elseif event == EVT_ENTER_BREAK then
-      	if RADIO == "HORUS" then
-      		if killEnterBreak == 1 then
-            	killEnterBreak = 0
-         	else
-            	gState = PAGE_DISPLAY
-            	menuList[menuActive].f()
-         	end
-      	else
-         	gState = PAGE_DISPLAY
-         	menuList[menuActive].f()
+        if RADIO == "HORUS" then
+            if killEnterBreak == 1 then
+                killEnterBreak = 0
+            else
+                gState = PAGE_DISPLAY
+                menuList[menuActive].f()
+            end
+        else
+            gState = PAGE_DISPLAY
+            menuList[menuActive].f()
         end 
       end
    -- normal page viewing
    elseif gState <= PAGE_DISPLAY then
-   	  if event == EVT_PAGEUP_FIRST then
+      if event == EVT_PAGEUP_FIRST then
          incPage(-1)
       elseif event == EVT_MENU_BREAK  or event == EVT_PAGEDN_FIRST then
          incPage(1)

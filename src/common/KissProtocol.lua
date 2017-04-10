@@ -40,14 +40,14 @@ kissCRCErrors = 0
 
 -- Format kiss float value
 local function formatKissFloat(v, d)
-	local s = string.format("%0.4d", v);
-	local part1 = string.sub(s, 1, string.len(s)-3)
-	local part2 = string.sub(string.sub(s,-3), 1, d)
-	if d>0 then 
-		return part1.."."..part2
-	else
-		return part1
-	end
+    local s = string.format("%0.4d", v);
+    local part1 = string.sub(s, 1, string.len(s)-3)
+    local part2 = string.sub(string.sub(s,-3), 1, d)
+    if d>0 then 
+        return part1.."."..part2
+    else
+        return part1
+    end
 end
 
 local function subrange(t, first, last)
@@ -130,13 +130,13 @@ local function kissProcessTxQ()
       return false
    else 
       kissSendSport(payload)
-   	  if kissTxIdx > #(kissTxBuf) then
- 		kissTxBuf = {}
-      	kissTxIdx = 1
-      	return false
-   	  else 
-   	    return true
-   	  end
+      if kissTxIdx > #(kissTxBuf) then
+        kissTxBuf = {}
+        kissTxIdx = 1
+        return false
+      else 
+        return true
+      end
    end
 end
 
@@ -159,7 +159,7 @@ local function kissSendRequest(cmd,payload)
    checksum = bit32.band(checksum, 0xFFFF)
    local tmpSum = 0;
    if (#(payload) > 0) then 
-   		tmpSum = checksum / #(payload)
+        tmpSum = checksum / #(payload)
    end
    kissTxBuf[#(payload)+3] = bit32.band(math.floor(tmpSum), 0xFF)
    
@@ -217,7 +217,7 @@ local function kissReceivedReply(payload)
    while (idx <= 6) and (kissRxIdx <= kissRxSize) do
       kissRxBuf[kissRxIdx] = payload[idx]
       if (kissRxIdx>2) and (kissRxIdx < kissRxSize) then
-      		kissRxCRC = kissRxCRC + payload[idx]
+            kissRxCRC = kissRxCRC + payload[idx]
       end
       kissRxIdx = kissRxIdx + 1
       idx = idx + 1
@@ -229,13 +229,13 @@ local function kissReceivedReply(payload)
    end
 
    if kissRxSize>3 then
-   		kissRxCRC = bit32.band(math.floor(kissRxCRC / (kissRxSize-3)), 0xFF)
-   		if kissRxCRC ~= kissRxBuf[kissRxSize] then
-   	  		kissStarted = false
-   			kissCRCErrors = kissCRCErrors + 1
-   			return nil
-   		end
-   	end
+        kissRxCRC = bit32.band(math.floor(kissRxCRC / (kissRxSize-3)), 0xFF)
+        if kissRxCRC ~= kissRxBuf[kissRxSize] then
+            kissStarted = false
+            kissCRCErrors = kissCRCErrors + 1
+            return nil
+        end
+    end
 
    kissRepliesReceived = kissRepliesReceived + 1
    kissStarted = false
@@ -277,16 +277,18 @@ end
 -- End of KISS/SPORT code
 --
 
-local KISS_GET_RATES    		= 0x4D
-local KISS_SET_RATES 			= 0x4E
-local KISS_GET_PIDS     		= 0x43
-local KISS_SET_PIDS     		= 0x44
+local KISS_GET_RATES            = 0x4D
+local KISS_SET_RATES            = 0x4E
+local KISS_GET_PIDS             = 0x43
+local KISS_SET_PIDS             = 0x44
 local KISS_GET_VTX_CONFIG       = 0x45
-local KISS_SET_VTX_CONFIG   	= 0x46
-local KISS_GET_FILTERS       	= 0x47
-local KISS_SET_FILTERS   		= 0x48
-local KISS_GET_ALARMS       	= 0x49
-local KISS_SET_ALARMS   		= 0x4A
+local KISS_SET_VTX_CONFIG       = 0x46
+local KISS_GET_FILTERS          = 0x47
+local KISS_SET_FILTERS          = 0x48
+local KISS_GET_ALARMS           = 0x49
+local KISS_SET_ALARMS           = 0x4A
+local KISS_GET_TPA              = 0x4B
+local KISS_SET_TPA              = 0x4C
 
 local REQ_TIMEOUT = 200 -- 1000ms request timeout
 
@@ -352,8 +354,8 @@ end
 local function postReadPIDS(page)
    local pids = {}
    for i=0,2 do
-   	 pids[i*3+1] = bit32.lshift(page.values[i*6+1], 8) + page.values[i*6+2]
-  	 pids[i*3+2] = bit32.lshift(page.values[i*6+3], 8) + page.values[i*6+4]
+     pids[i*3+1] = bit32.lshift(page.values[i*6+1], 8) + page.values[i*6+2]
+     pids[i*3+2] = bit32.lshift(page.values[i*6+3], 8) + page.values[i*6+4]
      pids[i*3+3] = bit32.lshift(page.values[i*6+5], 8) + page.values[i*6+6]
    end
    page.values = pids
@@ -363,12 +365,12 @@ local function getWriteValuesPIDS(values)
    local ret = {}
    local tmp
    for i=0,2 do 
-    	ret[i*6+1] = bit32.rshift(values[i*3+1], 8)
-   		ret[i*6+2] = bit32.band(values[i*3+1], 0xFF)
-    	ret[i*6+3] = bit32.rshift(values[i*3+2], 8)
-   		ret[i*6+4] = bit32.band(values[i*3+2], 0xFF)
-    	ret[i*6+5] = bit32.rshift(values[i*3+3], 8)
-   		ret[i*6+6] = bit32.band(values[i*3+3], 0xFF)
+        ret[i*6+1] = bit32.rshift(values[i*3+1], 8)
+        ret[i*6+2] = bit32.band(values[i*3+1], 0xFF)
+        ret[i*6+3] = bit32.rshift(values[i*3+2], 8)
+        ret[i*6+4] = bit32.band(values[i*3+2], 0xFF)
+        ret[i*6+5] = bit32.rshift(values[i*3+3], 8)
+        ret[i*6+6] = bit32.band(values[i*3+3], 0xFF)
    end
    return ret
 end
@@ -376,7 +378,7 @@ end
 local function postReadRates(page)
   local rates = {}
   for i=1,9 do
-  	rates[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
+    rates[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
   end
   page.values = rates;
 end
@@ -385,7 +387,7 @@ local function getWriteValuesRates(values)
    local ret = {}
    for i=1,9 do 
         ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
-   		ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
+        ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
    end
    return ret
 end
@@ -404,6 +406,31 @@ local function getWriteValuesAlarms(values)
    ret[2] = bit32.band(tmp, 0xFF)
    ret[3] = bit32.band(bit32.rshift(values[2], 8), 0xFF)
    ret[4] = bit32.band(values[2], 0xFF)
+   return ret
+end
+
+local function postReadTPA(page)
+   local tpa = {}
+   for i=1,3 do
+        tpa[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
+   end
+   tpa[4] = page.values[7] + 1
+   for i=5,10 do
+        tpa[i] = page.values[i + 3]
+   end
+   page.values = tpa
+end
+
+local function getWriteValuesTPA(values)
+   local ret = {}
+   for i=1,3 do
+       ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
+       ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
+   end
+   ret[7] = bit32.band(values[4]-1, 0xFF)
+   for i=5,10 do
+       ret[i+3] = bit32.band(values[i], 0xFF)
+   end
    return ret
 end
 

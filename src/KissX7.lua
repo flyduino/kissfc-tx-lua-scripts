@@ -61,16 +61,16 @@ SetupPages = {
    {
       title = "Filters",
       text = {
-         { t = "Center", 			x = 50, y = 14 },
-         { t = "Cutoff", 			x = 90, y = 14 },
-         { t = "Notch", 			x = 3,  y = 14 },
-         { t = "Roll",  			x = 3,  y = 25 },
-         { t = "Pitch", 			x = 3,  y = 38 },
-         { t = "LPF",   			x = 3,  y = 52 },
-         { t = "Yaw",   			x = 65, y = 52 }
+         { t = "Center",            x = 50, y = 14 },
+         { t = "Cutoff",            x = 90, y = 14 },
+         { t = "Notch",             x = 3,  y = 14 },
+         { t = "Roll",              x = 3,  y = 25 },
+         { t = "Pitch",             x = 3,  y = 38 },
+         { t = "LPF",               x = 3,  y = 52 },
+         { t = "Yaw",               x = 65, y = 52 }
       },
       lines = {
-      	 { x1 = 1, y1 = 48, x2 = 125, y2 = 48 }
+         { x1 = 1, y1 = 48, x2 = 125, y2 = 48 }
       },
       fields = {
          -- Filters
@@ -89,12 +89,45 @@ SetupPages = {
       getWriteValues = getWriteValuesFilters
    },
    {
+      title = "TPA",
+      text = {
+         { t = "P",     x = 45, y = 10 },
+         { t = "I",     x = 78, y = 10 },
+         { t = "D",     x = 107,y = 10 },
+         { t = "TPA",   x = 3,  y = 20 },
+         { t = "0",     x = 35,  y = 43 },
+         { t = "100",   x = 105, y = 43 },
+         { t = "Thr%",  x = 3,  y = 43 },
+         { t = "Inf%",  x = 3, y = 53 },
+      },
+      lines = {
+         { x1 = 1, y1 = 30, x2 = 125, y2 = 30 }
+      },
+      fields = {
+         -- TPA
+         { x = 20,  y = 20, i=1, max=900, prec=2 },
+         { x = 53,  y = 20, i=2, max=900, prec=2 },
+         { x = 80,  y = 20, i=3, max=900, prec=2 },
+         { t = "Custom TPA", x = 3,  y = 33, sp=65, i=4, min=1, max=2, table = { "Off", "On" } },
+         { x = 38,   y = 43, i=5, max=100},
+         { x = 61,   y = 43, i=6, max=100},
+         { x = 15,   y = 53, i=7, max=100},
+         { x = 38,   y = 53, i=8, max=100},
+         { x = 61,   y = 53, i=9, max=100},
+         { x = 85,   y = 53, i=10,max=100},
+      },
+      read  = KISS_GET_TPA,
+      write = KISS_SET_TPA,
+      postRead = postReadTPA,
+      getWriteValues = getWriteValuesTPA
+   },
+   {
       title = "Alarms",
       text = {},
       fields = {
          -- Alarms
-         { t = "VBat",    x = 15,  y = 27, sp = 70, i=1, min=0, max=26000, prec=1 },
-         { t = "mAH",     x = 15,  y = 40, sp = 70, i=2, min=0, max=26000, inc=10 }
+         { t = "VBat",    x = 15,  y = 27, sp = 70, i=1, min=0, max=26000, prec=1, suff = " V" },
+         { t = "mAH",     x = 15,  y = 40, sp = 70, i=2, min=0, max=26000, inc=10, suff = " mAh" }
       },
       read  = KISS_GET_ALARMS,
       write = KISS_SET_ALARMS,
@@ -106,10 +139,10 @@ SetupPages = {
       text = {},
       fields = {
          -- VTX
-         { t = "Band",    	   x = 15,  y = 14, sp = 70, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
+         { t = "Band",         x = 15,  y = 14, sp = 70, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
          { t = "Channel",      x = 15,  y = 27, sp = 70, i=3, min=1, max=8 },
-         { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=600 },
-         { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=600 }
+         { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=600, suff = " mW" },
+         { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=600, suff = " mW" }
       },
       read  = KISS_GET_VTX_CONFIG,
       write = KISS_SET_VTX_CONFIG,
@@ -123,17 +156,17 @@ local drawScreenTitle = function(screen_title, currentPage)
 end
 
 local drawTelemetry = function()
-	lcd.drawText(35,55,"No telemetry", BLINK)
+    lcd.drawText(35,55,"No telemetry", BLINK)
 end
 
 local drawSaving = function()
-	lcd.drawFilledRectangle(6,12,120,30, ERASE)
-	lcd.drawRectangle(6,12,120,30, SOLID)
-	lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
+    lcd.drawFilledRectangle(5,12,120,30, ERASE)
+    lcd.drawRectangle(5,12,120,30, SOLID)
+    lcd.drawText(33,18,"Saving...", DBLSIZE + BLINK)
 end
 
 local function drawMenu(menuList, menuActive)
-   local x = 6
+   local x = 5
    local y = 12
    local w = 120
    local h = #(menuList) * 8 + 6
@@ -151,7 +184,7 @@ local function drawMenu(menuList, menuActive)
 end
 
 local function getDefaultTextOptions() 
-	return 0
+    return 0
 end
 
 local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
