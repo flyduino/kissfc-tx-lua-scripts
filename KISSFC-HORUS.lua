@@ -411,26 +411,26 @@ SetupPages = {
    {
       title = "PIDs",
       text = {
-         { t = "P",      x = 129,  y =  68 },
-         { t = "I",      x = 209,  y =  68 },
-         { t = "D",      x = 289,  y =  68 },
-         { t = "ROLL",   x =  35,  y =  96 },
-         { t = "PITCH",  x =  35,  y = 124 },
-         { t = "YAW",    x =  35,  y = 152 }
+         { t = "P",      x = 170,  y =  62 },
+         { t = "I",      x = 280,  y =  62 },
+         { t = "D",      x = 370,  y =  62 },
+         { t = "Roll",   x =  35,  y =  105 },
+         { t = "Pitch",  x =  35,  y = 155 },
+         { t = "Yaw",    x =  35,  y = 205 }
       },
       fields = {
          -- P
-         { x = 129,  y =  96, i=1, max=65000, prec=2 },
-         { x = 129,  y = 124, i=2, max=65000, prec=3 },
-         { x = 129,  y = 152, i=3, max=65000, prec=2 },
-         -- I
-         { x = 209,  y =  96, i=4, max=65000, prec=2 },
-         { x = 209,  y = 124, i=5, max=65000, prec=3 },
-         { x = 209,  y = 152, i=6, max=65000, prec=2 },
-         -- D
-         { x = 289,  y =  96, i=7, max=65000, prec=2 },
-         { x = 289,  y = 124, i=8, max=65000, prec=3 },
-         { x = 289,  y = 152, i=9, max=65000, prec=2 }
+         { x = 150, y = 105, i=1, max=65000, prec=2 },
+         { x = 250, y = 105, i=2, max=65000, prec=3 },
+         { x = 350, y = 105, i=3, max=65000, prec=2 },
+         -- Pitch
+         { x = 150, y = 155, i=4, max=65000, prec=2 },
+         { x = 250, y = 155, i=5, max=65000, prec=3 },
+         { x = 350, y = 155, i=6, max=65000, prec=2 },
+         -- Yaw
+         { x = 150, y = 205, i=7, max=65000, prec=2 },
+         { x = 250, y = 205, i=8, max=65000, prec=3 },
+         { x = 350, y = 205, i=9, max=65000, prec=2 }
       },
       read  = KISS_GET_PIDS,
       write = KISS_SET_PIDS,
@@ -440,26 +440,26 @@ SetupPages = {
    {
       title = "Rates",
       text = {
-         { t = "RC Rate", x = 129,  y = 68 },
-         { t = "Rate",    x = 209, y = 68 },
-         { t = "RC Curve", x = 289, y = 68 },
-         { t = "Roll",  x = 35,  y = 96 },
-         { t = "Pitch", x = 35,  y = 124 },
-         { t = "Yaw",   x = 35,  y = 152 }
+         { t = "RC Rate", 	x = 110, y = 62 },
+         { t = "Rate",    	x = 230, y = 62 },
+         { t = "RC Curve", 	x = 320, y = 62 },
+         { t = "Roll",  	x = 35,  y = 105 },
+         { t = "Pitch", 	x = 35,  y = 155 },
+         { t = "Yaw",   	x = 35,  y = 205 }
       },
       fields = {
          -- RC Rate
-         { x = 129,  y = 96, i=1, max=65000, prec=2 },
-         { x = 209,  y = 96, i=2, max=65000, prec=2 },
-         { x = 289, y = 96, i=3, max=65000, prec=2 },
-         -- Rate
-         { x = 129,  y = 124, i=4, max=65000, prec=2 },
-         { x = 209,  y = 124, i=5, max=65000, prec=2 },
-         { x = 289, y = 124, i=6, max=65000, prec=2 },
-         -- RC Curve
-         { x = 129,  y = 152, i=7, max=65000, prec=2 },
-         { x = 209,  y = 152, i=8, max=65000, prec=2 },
-         { x = 289, y = 152, i=9, max=65000, prec=2 }
+         { x = 125, y = 105, i=1, max=65000, prec=2 },
+         { x = 235, y = 105, i=2, max=65000, prec=2 },
+         { x = 355, y = 105, i=3, max=65000, prec=2 },
+         -- Pitch
+         { x = 125,  y = 155, i=4, max=65000, prec=2 },
+         { x = 235,  y = 155, i=5, max=65000, prec=2 },
+         { x = 355,  y = 155, i=6, max=65000, prec=2 },
+         -- Yaw
+         { x = 125,  y = 205, i=7, max=65000, prec=2 },
+         { x = 235,  y = 205, i=8, max=65000, prec=2 },
+         { x = 355,  y = 205, i=9, max=65000, prec=2 }
       },
       read  = KISS_GET_RATES,
       write = KISS_SET_RATES,
@@ -470,27 +470,27 @@ SetupPages = {
       title = "Filters",
       text = {
         -- { t = "Notch",  x = 47,  y = 14 },
-         { t = "Center", x = 180, y = 68 },
-         { t = "Cutoff", x = 280, y = 68 },
-         { t = "Notch Filter", x = 70,  y = 68 },
-         { t = "Roll",  x = 35,  y = 96 },
-         { t = "Pitch", x = 35,  y = 124 },
-         { t = "LPF",   x = 35,  y = 158 },
-         { t = "Yaw",   x = 35, y = 186 }
+         { t = "Notch Filter", x = 90,  y = 60 },
+        { t = "Center", x = 250, y = 60 },
+        { t = "Cutoff", x = 370, y = 60 },
+        { t = "Roll",  x = 25,  y = 95 },
+        { t = "Pitch", x = 25,  y = 130 },
+        { t = "LPF",   x = 45,  y = 190 },
+        { t = "Yaw",   x = 250, y = 190 }
       },
       lines = {
-      	 { x1 = 4, y1 = 48, x2 = 190, y2 = 48 }
+      	 { x1 = 10, y1 = 170, x2 = LCD_W-10, y2 = 170 }
       },
       fields = {
          -- Filters
-         { x = 100,  y = 96,  i=1, min=1, max=2, table = { "Off", "On" }},
-         { x = 180,  y = 96,  i=2, min=0, max=490 },
-         { x = 280, y = 96,  i=3, min=0, max=490 },
-         { x = 100,  y = 124,  i=4, min=1, max=2, table = { "Off", "On" }},
-         { x = 180,  y = 124,  i=5, min=0, max=490 },
-         { x = 280, y = 124,  i=6, min=0, max=490 },
-         { x = 100,  y = 158,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
-         { x = 100, y = 186,  i=8, min=0, max=97},
+         { x = 150,  y = 95,  i=1, min=1, max=2, table = { "Off", "On" }},
+         { x = 280,  y = 95,  i=2, min=0, max=490 },
+         { x = 400,  y = 95,  i=3, min=0, max=490 },
+         { x = 150,  y = 130, i=4, min=1, max=2, table = { "Off", "On" }},
+         { x = 280,  y = 130, i=5, min=0, max=490 },
+         { x = 400,  y = 130, i=6, min=0, max=490 },
+         { x = 100,  y = 190, i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
+         { x = 320,  y = 190, i=8, min=0, max=97},
       },
       read  = KISS_GET_FILTERS,
       write = KISS_SET_FILTERS,
@@ -502,8 +502,8 @@ SetupPages = {
       text = {},
       fields = {
          -- Alarms
-         { t = "VBat",    x = 100,  y = 96, sp = 60, i=1, min=0, max=26000, prec=1 },
-         { t = "mAH",     x = 250, y = 96, sp = 60, i=2, min=0, max=26000, inc=10 }
+         { t = "VBat",    x = 80,  y = 110, sp = 80, i=1, min=0, max=26000, prec=1 },
+         { t = "mAh",     x = 280, y = 110, sp = 80, i=2, min=0, max=26000, inc=10 }
       },
       read  = KISS_GET_ALARMS,
       write = KISS_SET_ALARMS,
@@ -511,14 +511,14 @@ SetupPages = {
       getWriteValues = getWriteValuesAlarms
    },  
    {
-      title = "VTX",
+      title = "VTX Tramp HV",
       text = {},
       fields = {
          -- VTX
-         { t = "Band",    	   x = 35,  y = 96, sp = 100, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
-         { t = "Channel",      x = 210, y = 96, sp = 120, i=3, min=1, max=8 },
-         { t = "Low Power",    x = 35,  y = 158, sp = 100, i=4, min=0, max=600 },
-         { t = "High Power",   x = 210, y = 158, sp = 120, i=5, min=0, max=600 }
+         { t = "Band",    	   x = 30,  y = 96, sp = 80, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
+         { t = "Channel",      x = 255, y = 96, sp = 120, i=3, min=1, max=8 },
+		 { t = "Low Power",    x = 30,  y = 158, sp = 155, i=4, min=0, max=600, inc=5 },
+         { t = "High Power",   x = 255, y = 158, sp = 155, i=5, min=25, max=600, inc=5 }
       },
       read  = KISS_GET_VTX_CONFIG,
       write = KISS_SET_VTX_CONFIG,
@@ -646,10 +646,14 @@ local function requestPage(page)
    end
 end
 
+backgroundFill = TEXT_BGCOLOR
+foregroundColor = LINE_COLOR
+globalTextOptions = MIDSIZE + TEXT_COLOR
 
 drawScreenTitle = function (title)
   lcd.drawFilledRectangle(0, 0, LCD_W, 30, TITLE_BGCOLOR)
   lcd.drawText(1, 5, title, MENU_TITLE_COLOR)
+  lcd.drawText(LCD_W-40, 5, currentPage.."/"..#(SetupPages), MENU_TITLE_COLOR)
   --lcd.drawText(LCD_W-40, 5, page.."/"..pages, MENU_TITLE_COLOR)
 end
 
@@ -658,7 +662,7 @@ local function drawScreen(page,page_locked)
 
    local screen_title = page.title
 
-   drawScreenTitle('Kiss Setup:  '..screen_title,currentPage,#(SetupPages))
+   drawScreenTitle('Kiss Setup:  '..screen_title)
 
    for i=1,#(page.text) do
       local f = page.text[i]
@@ -669,12 +673,19 @@ local function drawScreen(page,page_locked)
       end
    end
    
+   if page.lines ~= nil then
+		for i=1,#(page.lines) do
+    	  local f = page.lines[i]
+			lcd.drawLine(f.x1, f.y1, f.x2, f.y2, SOLID, 0)
+		end
+	end
+   
    for i=1,#(page.fields) do
       local f = page.fields[i]
 
       local text_options = globalTextOptions
       if i == currentLine then
-         text_options = INVERS
+         text_options = text_options + INVERS
          if gState == EDITING then
             text_options = text_options + BLINK
          end
@@ -742,17 +753,17 @@ local function drawMenu()
    local x = 120
    local y = 100
    local w = 200
-   local x_offset = 68
+   local x_offset = 70
    local h_line = 20
    local h_offset = 6
    local h = #(menuList) * h_line + h_offset*2
 
    lcd.drawFilledRectangle(x,y,w,h,backgroundFill)
    lcd.drawRectangle(x,y,w-1,h-1,foregroundColor)
-   lcd.drawText(x+h_line/2,y+h_offset,"Menu:",globalTextOptions)
+   lcd.drawText(x+h_line/2,y+h_offset,"Menu:", TEXT_COLOR)
 
    for i,e in ipairs(menuList) do
-      local text_options = globalTextOptions
+      local text_options = TEXT_COLOR
       if menuActive == i then
          text_options = text_options + INVERS
       end
@@ -867,9 +878,9 @@ local function run(event)
    if gState == MENU_DISP then
       drawMenu()
    elseif gState == PAGE_SAVING then
-      lcd.drawFilledRectangle(40,12,120,30,ERASE)
-      lcd.drawRectangle(40,12,120,30,SOLID)
-      lcd.drawText(64,18,"Saving...", DBLSIZE + BLINK)
+      lcd.drawFilledRectangle(120, 100, 180, 60, backgroundFill)
+      lcd.drawRectangle(120, 115, 180, 60, foregroundColor)
+      lcd.drawText(132,110,"Saving...", DBLSIZE + BLINK + TEXT_COLOR)
    end
 
    processKissReply(kissPollReply())
