@@ -297,10 +297,14 @@ local function run(event)
    elseif gState == EDITING then
       if (event == EVT_EXIT_BREAK) or (event == EVT_ENTER_BREAK) then
          gState = PAGE_DISPLAY
-      elseif event == EVT_PLUS_FIRST or event == EVT_PLUS_REPT or event == EVT_ROT_RIGHT then
+      elseif event == EVT_PLUS_FIRST or event == EVT_ROT_RIGHT then
          incValue(1)
-      elseif event == EVT_MINUS_FIRST or event == EVT_MINUS_REPT or event == EVT_ROT_LEFT then
+      elseif event == EVT_PLUS_REPT then
+         incValue(10)
+      elseif event == EVT_MINUS_FIRST or event == EVT_ROT_LEFT then
          incValue(-1)
+      elseif event == EVT_MINUS_REPT then
+		 incValue(-10)
       end
    end
 
