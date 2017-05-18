@@ -1,5 +1,5 @@
 
-VERSION = "0.2"
+VERSION = "0.3"
 
 luatmp = TmpFC.lua TmpX7.lua TmpHorus.lua
 lua = KissFC.lua KissX7.lua KissHorus.lua

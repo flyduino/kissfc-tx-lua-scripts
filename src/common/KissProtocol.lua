@@ -119,7 +119,6 @@ local function kissProcessTxQ()
    end
 
    if i <= 6 then
-      -- zero fill
       while i <= 6 do
          payload[i] = 0
          i = i + 1
@@ -141,28 +140,29 @@ local function kissProcessTxQ()
 end
 
 local function kissSendRequest(cmd,payload)
-
    -- busy
    if #(kissTxBuf) ~= 0 then
       return nil
    end
 
-   local checksum = 0
+   local crc = 0
 
    kissTxBuf[1] = bit32.band(cmd,0xFF)  -- KISS command
    kissTxBuf[2] = bit32.band(#(payload), 0xFF) -- KISS payload size
 
    for i=1,#(payload) do
       kissTxBuf[i+2] = payload[i]
-      checksum = checksum + payload[i]
+      crc = bit32.bxor(crc, payload[i]);
+      for i=1,8 do
+       	if bit32.band(crc, 0x80) ~= 0 then
+       		crc = bit32.bxor(bit32.lshift(crc, 1), 0xD5)
+       	else
+       		crc = bit32.lshift(crc, 1)
+       	end
+       	crc = bit32.band(crc, 0xFF)
+      end
    end
-   checksum = bit32.band(checksum, 0xFFFF)
-   local tmpSum = 0;
-   if (#(payload) > 0) then 
-   		tmpSum = checksum / #(payload)
-   end
-   kissTxBuf[#(payload)+3] = bit32.band(math.floor(tmpSum), 0xFF)
-   
+   kissTxBuf[#(payload)+3] = crc
    kissLastReq = cmd
    kissRequestsSent = kissRequestsSent + 1
    return kissProcessTxQ()
@@ -183,10 +183,6 @@ local function kissReceivedReply(payload)
 
       kissErrorPk = kissErrorPk + 1
 
-      -- return error
-      -- CRC checking missing
-
-      --return payload[idx]
       return nil
    end
    
@@ -217,7 +213,15 @@ local function kissReceivedReply(payload)
    while (idx <= 6) and (kissRxIdx <= kissRxSize) do
       kissRxBuf[kissRxIdx] = payload[idx]
       if (kissRxIdx>2) and (kissRxIdx < kissRxSize) then
-      		kissRxCRC = kissRxCRC + payload[idx]
+      		kissRxCRC = bit32.bxor(kissRxCRC, payload[idx]);
+      		for i=1,8 do
+       			if bit32.band(kissRxCRC, 0x80) ~= 0 then
+       				kissRxCRC = bit32.bxor(bit32.lshift(kissRxCRC, 1), 0xD5)
+       			else
+       				kissRxCRC = bit32.lshift(kissRxCRC, 1)
+       			end
+       			kissRxCRC = bit32.band(kissRxCRC, 0xFF)
+      		end
       end
       kissRxIdx = kissRxIdx + 1
       idx = idx + 1
@@ -229,7 +233,6 @@ local function kissReceivedReply(payload)
    end
 
    if kissRxSize>3 then
-   		kissRxCRC = bit32.band(math.floor(kissRxCRC / (kissRxSize-3)), 0xFF)
    		if kissRxCRC ~= kissRxBuf[kissRxSize] then
    	  		kissStarted = false
    			kissCRCErrors = kissCRCErrors + 1
