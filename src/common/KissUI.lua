@@ -322,7 +322,7 @@ local function run(event)
    drawScreen(page,page_locked)
    
    -- do we have valid telemetry data?
-   if getValue("RSSI") == 0 then
+   if isTelemetryPresent()~=true then
       -- No!
       drawTelemetry()
       invalidatePages()

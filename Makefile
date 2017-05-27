@@ -1,39 +1,44 @@
 
-VERSION = "0.3"
-
-luatmp = TmpFC.lua TmpX7.lua TmpHorus.lua
-lua = KissFC.lua KissX7.lua KissHorus.lua
+VERSION = 0.4
 
 .PHONY: all
-all: clean $(luatmp) $(lua)
+all: clean prepare luatmp lua
 
-TmpFC.lua: 
-	cat src/common/KissProtocol.lua src/KissFC.lua src/common/KissUI.lua > TmpFC.lua
+.PHONY: luatmp
+luatmp:
 
-TmpX7.lua: 
-	cat src/common/KissProtocol.lua src/KissX7.lua src/common/KissUI.lua > TmpX7.lua
-
-TmpHorus.lua: 
-	cat src/common/KissProtocol.lua src/KissHorus.lua src/common/KissUI.lua > TmpHorus.lua
+	cat src/common/KissProtocolSPort.lua src/common/KissProtocolAdapters.lua src/KissX9.lua src/common/KissUI.lua > TmpX9SP.lua
+	cat src/common/KissProtocolSPort.lua src/common/KissProtocolAdapters.lua src/KissX7.lua src/common/KissUI.lua > TmpX7SP.lua
+	cat src/common/KissProtocolSPort.lua src/common/KissProtocolAdapters.lua src/KissHorus.lua src/common/KissUI.lua > TmpHorusSP.lua
+	cat src/common/KissProtocolCF.lua src/common/KissProtocolAdapters.lua src/KissX9.lua src/common/KissUI.lua > TmpX9CF.lua
+	cat src/common/KissProtocolCF.lua src/common/KissProtocolAdapters.lua src/KissX7.lua src/common/KissUI.lua > TmpX7CF.lua
+	cat src/common/KissProtocolCF.lua src/common/KissProtocolAdapters.lua src/KissHorus.lua src/common/KissUI.lua > TmpHorusCF.lua
 
 .PHONY: clean
-clean: 
-	rm -f $(lua) $(luatmp)
+clean:
+	rm -f Tmp*.lua
+	rm -rf tmp
 
-KissFC.lua:
-	./node_modules/luamin/bin/luamin --file TmpFC.lua > KissFC.lua
-		
-KissX7.lua:
-	./node_modules/luamin/bin/luamin --file TmpX7.lua > KissX7.lua
+.PHONY: prepare
+prepare:
+	mkdir -p tmp/X9
+	mkdir -p tmp/X7
+	mkdir -p tmp/Horus
 
-KissHorus.lua:
-	./node_modules/luamin/bin/luamin --file TmpHorus.lua > KissHorus.lua
+.PHONY: lua
+lua:
+	./node_modules/luamin/bin/luamin --file TmpX9SP.lua > tmp/X9/KissSP.lua
+	./node_modules/luamin/bin/luamin --file TmpX7SP.lua > tmp/X7/KissSP.lua
+	./node_modules/luamin/bin/luamin --file TmpHorusSP.lua > tmp/Horus/KissSP.lua
+	./node_modules/luamin/bin/luamin --file TmpX9CF.lua > tmp/X9/KissCF.lua
+	./node_modules/luamin/bin/luamin --file TmpX7CF.lua > tmp/X7/KissCF.lua
+	./node_modules/luamin/bin/luamin --file TmpHorusCF.lua > tmp/Horus/KissCF.lua
 
 .PHONY: zip
 zip: 
 	test -d dist || mkdir dist
-	zip dist/kiss-lua-scripts-${VERSION}.zip ${lua}
-
+	cd tmp; zip -r ../dist/kiss-lua-scripts-${VERSION}.zip *
+	
 .PHONY: dist
-dist:   clean $(luatmp) $(lua) zip
+dist:   clean prepare luatmp lua zip
 
