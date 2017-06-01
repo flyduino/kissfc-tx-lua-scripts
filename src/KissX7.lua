@@ -89,6 +89,39 @@ SetupPages = {
       getWriteValues = getWriteValuesFilters
    },
    {
+      title = "TPA",
+      text = {
+         { t = "P",     x = 45, y = 10 },
+         { t = "I",     x = 78, y = 10 },
+         { t = "D",     x = 107,y = 10 },
+         { t = "TPA",   x = 3,  y = 20 },
+         { t = "0",     x = 35,  y = 43 },
+         { t = "100",   x = 105, y = 43 },
+         { t = "Thr%",  x = 3,  y = 43 },
+         { t = "Inf%",  x = 3, y = 53 },
+      },
+      lines = {
+         { x1 = 1, y1 = 30, x2 = 125, y2 = 30 }
+      },
+      fields = {
+         -- TPA
+         { x = 20,  y = 20, i=1, max=900, prec=2 },
+         { x = 53,  y = 20, i=2, max=900, prec=2 },
+         { x = 80,  y = 20, i=3, max=900, prec=2 },
+         { t = "Custom TPA", x = 3,  y = 33, sp=65, i=4, min=1, max=2, table = { "Off", "On" } },
+         { x = 38,   y = 43, i=5, max=100},
+         { x = 61,   y = 43, i=6, max=100},
+         { x = 15,   y = 53, i=7, max=100},
+         { x = 38,   y = 53, i=8, max=100},
+         { x = 61,   y = 53, i=9, max=100},
+         { x = 85,   y = 53, i=10,max=100},
+      },
+      read  = KISS_GET_TPA,
+      write = KISS_SET_TPA,
+      postRead = postReadTPA,
+      getWriteValues = getWriteValuesTPA
+   },
+   {
       title = "Alarms",
       text = {},
       fields = {
@@ -127,13 +160,13 @@ local drawTelemetry = function()
 end
 
 local drawSaving = function()
-	lcd.drawFilledRectangle(6,12,120,30, ERASE)
-	lcd.drawRectangle(6,12,120,30, SOLID)
-	lcd.drawText(34,18,"Saving...", DBLSIZE + BLINK)
+    lcd.drawFilledRectangle(5,12,120,30, ERASE)
+    lcd.drawRectangle(5,12,120,30, SOLID)
+    lcd.drawText(33,18,"Saving...", DBLSIZE + BLINK)
 end
 
 local function drawMenu(menuList, menuActive)
-   local x = 6
+   local x = 5
    local y = 12
    local w = 120
    local h = #(menuList) * 8 + 6

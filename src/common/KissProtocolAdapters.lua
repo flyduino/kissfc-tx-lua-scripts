@@ -6,11 +6,13 @@ local KISS_SET_RATES 			= 0x4E
 local KISS_GET_PIDS     		= 0x43
 local KISS_SET_PIDS     		= 0x44
 local KISS_GET_VTX_CONFIG       = 0x45
-local KISS_SET_VTX_CONFIG   	= 0x46
-local KISS_GET_FILTERS       	= 0x47
-local KISS_SET_FILTERS   		= 0x48
-local KISS_GET_ALARMS       	= 0x49
-local KISS_SET_ALARMS   		= 0x4A
+local KISS_SET_VTX_CONFIG       = 0x46
+local KISS_GET_FILTERS          = 0x47
+local KISS_SET_FILTERS          = 0x48
+local KISS_GET_ALARMS           = 0x49
+local KISS_SET_ALARMS           = 0x4A
+local KISS_GET_TPA              = 0x4B
+local KISS_SET_TPA              = 0x4C
 
 local REQ_TIMEOUT = 200 -- 1000ms request timeout
 
@@ -130,3 +132,32 @@ local function getWriteValuesAlarms(values)
    ret[4] = bit32.band(values[2], 0xFF)
    return ret
 end
+
+local function postReadTPA(page)
+   local tpa = {}
+   for i=1,3 do
+        tpa[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
+   end
+   tpa[4] = page.values[7] + 1
+   for i=5,10 do
+        tpa[i] = page.values[i + 3]
+   end
+   page.values = tpa
+end
+
+local function getWriteValuesTPA(values)
+   local ret = {}
+   for i=1,3 do
+       ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
+       ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
+   end
+   ret[7] = bit32.band(values[4]-1, 0xFF)
+   for i=5,10 do
+       ret[i+3] = bit32.band(values[i], 0xFF)
+   end
+   return ret
+end
+
+
+
+
