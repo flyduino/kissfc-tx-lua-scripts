@@ -5,17 +5,13 @@
 --
 -- Kiss version by Alex Fedorov aka FedorComander
 
--- Protocol version
+
+-- SPORT BEGIN
+
 SPORT_KISS_VERSION = bit32.lshift(1,5)
-
 SPORT_KISS_STARTFLAG = bit32.lshift(1,4)
-
--- Sensor ID used by the local LUA script
 LOCAL_SENSOR_ID  = 0x0D
-
--- Sensor ID used by the KISS server (BF, CF, MW, etc...)
 REMOTE_SENSOR_ID = 0x1B
-
 REQUEST_FRAME_ID = 0x30
 REPLY_FRAME_ID   = 0x32
 
@@ -28,21 +24,13 @@ local kissRxIdx = 1
 local kissRxCRC = 0
 local kissStarted = false
 local kissLastReq = 0
+local kissTxBuf = {}
+local kissTxIdx = 1
+local kissTxCRC = 0
+local kissTxPk = 0
 
 local function isTelemetryPresent() 
 	return getValue("RSSI")>0
-end
-
--- Format kiss float value
-local function formatKissFloat(v, d)
-	local s = string.format("%0.4d", v);
-	local part1 = string.sub(s, 1, string.len(s)-3)
-	local part2 = string.sub(string.sub(s,-3), 1, d)
-	if d>0 then 
-		return part1.."."..part2
-	else
-		return part1
-	end
 end
 
 local function subrange(t, first, last)
@@ -53,14 +41,7 @@ local function subrange(t, first, last)
   return sub
 end
 
-local kissTxBuf = {}
-local kissTxIdx = 1
-local kissTxCRC = 0
-
-local kissTxPk = 0
-
 local function kissSendSport(payload)
-
    local dataId = 0
    dataId = payload[1] + bit32.lshift(payload[2],8)
 
@@ -153,7 +134,7 @@ local function kissSendRequest(cmd,payload)
 end
 
 local function kissReceivedReply(payload)
-   
+
    local idx      = 1
    local head     = payload[idx]
    local err_flag = (bit32.band(head,0x20) ~= 0)
@@ -164,7 +145,7 @@ local function kissReceivedReply(payload)
       kissStarted = false
       return nil
    end
-   
+
    local start = (bit32.band(head,0x10) ~= 0)
    local seq   = bit32.band(head,0x0F)
 
@@ -249,6 +230,4 @@ local function kissPollReply()
    return nil
 end
 
---
--- End of KISS/SPORT code
---
+-- SPORT END
