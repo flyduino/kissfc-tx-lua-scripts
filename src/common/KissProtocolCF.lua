@@ -11,18 +11,6 @@ FC_RESPONSE_COMMAND = 0x79
 local kissLastReq = 0
 local kissTxBuf = {}
 
--- Format kiss float value
-local function formatKissFloat(v, d)
-  local s = string.format("%0.4d", v);
-  local part1 = string.sub(s, 1, string.len(s)-3)
-  local part2 = string.sub(string.sub(s,-3), 1, d)
-  if d>0 then
-    return part1.."."..part2
-  else
-    return part1
-  end
-end
-
 local function isTelemetryPresent()
   return true
 end
