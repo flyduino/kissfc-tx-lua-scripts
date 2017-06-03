@@ -1,18 +1,17 @@
 	return { 
-		read = 0x43, 
+		read =  0x43, 
 		write = 0x44,
-		postRead = function(page)
-   						local pids = {}
-   						for i=0,2 do
-   	 						pids[i*3+1] = bit32.lshift(page.values[i*6+1], 8) + page.values[i*6+2]
-  	 						pids[i*3+2] = bit32.lshift(page.values[i*6+3], 8) + page.values[i*6+4]
-     						pids[i*3+3] = bit32.lshift(page.values[i*6+5], 8) + page.values[i*6+6]
-   						end
-   						return pids
-					end,
-		getWriteValues = function(values)
+		postRead = function(values)
    						local ret = {}
-   						local tmp
+   						for i=0,2 do
+   	 						ret[i*3+1] = bit32.lshift(values[i*6+1], 8) + values[i*6+2]
+  	 						ret[i*3+2] = bit32.lshift(values[i*6+3], 8) + values[i*6+4]
+     						ret[i*3+3] = bit32.lshift(values[i*6+5], 8) + values[i*6+6]
+   						end
+   						return ret
+					end,
+		preWrite = function(values)
+   						local ret = {}
    						for i=0,2 do 
     						ret[i*6+1] = bit32.rshift(values[i*3+1], 8)
    							ret[i*6+2] = bit32.band(values[i*3+1], 0xFF)

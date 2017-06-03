@@ -1,19 +1,19 @@
 	return { 
 		read  = 0x4D, 
 		write = 0x4E,
-		postRead = function(page)
-   						local rates = {}
+		postRead = function(values)
+   						local ret = {}
   						for i=1,9 do
-  							rates[i] = bit32.lshift(page.values[(i-1)*2 + 1], 8) + page.values[(i-1)*2 + 2]
+  							ret[i] = bit32.lshift(values[(i-1)*2 + 1], 8) + values[(i-1)*2 + 2]
   						end
-  						return rates
+  						return ret
 					end,
-		getWriteValues = function(values)
-   						 local ret = {}
-   						 for i=1,9 do 
+		preWrite = function(values)
+   						local ret = {}
+   						for i=1,9 do 
         					ret[(i-1)*2 + 1] = bit32.rshift(values[i], 8)
    							ret[(i-1)*2 + 2] = bit32.band(values[i], 0xFF)
-   						 end
+   						end
    						return ret
 					end,
       	title = "Rates",

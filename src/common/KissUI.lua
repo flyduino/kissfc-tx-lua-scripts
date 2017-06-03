@@ -50,8 +50,8 @@ end
 
 local function saveSettings(new)
    if ActivePage.values then
-      if ActivePage.getWriteValues then
-         kissSendRequest(ActivePage.write, ActivePage.getWriteValues(ActivePage.values))
+      if ActivePage.preWrite then
+         kissSendRequest(ActivePage.write, ActivePage.preWrite(ActivePage.values))
       else
          kissSendRequest(ActivePage.write, ActivePage.values)
       end
@@ -74,7 +74,7 @@ local function invalidatePage()
 end
 
 local function loadPage(pageId) 
-	local file = "/SCRIPTS/TELEMETRY/screens/"..AllPages[pageId]..".lua"
+	local file = "/SCRIPTS/TELEMETRY/KISS/"..AllPages[pageId]..".lua"
 	clearTable(ActivePage)
 	local tmp = assert(loadScript(file))
     ActivePage = tmp()
@@ -84,13 +84,12 @@ local menuList = {
    { t = "save page",  f = saveSettings }, { t = "reload", f = invalidatePage }
 }
 
-
-local function processKissReply(cmd,rx_buf)
+local function processKissReply(cmd, rx_buf)
 
    if cmd == nil or rx_buf == nil then
       return
    end
-
+   
    -- response on saving
    if cmd == ActivePage.write then
       gState = PAGE_DISPLAY
@@ -110,7 +109,7 @@ local function processKissReply(cmd,rx_buf)
       end
 
       if ActivePage.postRead ~= nil then
-         ActivePage.postRead(page)
+         ActivePage.values = ActivePage.postRead(ActivePage.values)
       end
    end
 end
@@ -145,7 +144,7 @@ end
 local function requestPage()
    if ActivePage.read and ((ActivePage.reqTS == nil) or (ActivePage.reqTS + REQ_TIMEOUT <= getTime())) then
       ActivePage.reqTS = getTime()
-      kissSendRequest(ActivePage.read,{})
+      kissSendRequest(ActivePage.read, {})
    end
 end
 
@@ -335,8 +334,7 @@ local function run(event)
 
    local page_locked = false
 
-   if not ActivePage.values then
-      -- request values
+   if ActivePage.values == nil then
       requestPage()
       page_locked = true
    end

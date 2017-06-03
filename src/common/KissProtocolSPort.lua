@@ -105,7 +105,7 @@ local function kissProcessTxQ()
    end
 end
 
-local function kissSendRequest(cmd,payload)
+local function kissSendRequest(cmd, payload)
    -- busy
    if #(kissTxBuf) ~= 0 then
       return nil

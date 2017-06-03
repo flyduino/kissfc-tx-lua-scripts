@@ -6,7 +6,6 @@ all: clean prepare luatmp lua
 
 .PHONY: luatmp
 luatmp:
-
 	cat src/common/KissProtocolSPort.lua src/X9/Kiss.lua src/common/KissUI.lua > X9SP.lua
 	cat src/common/KissProtocolSPort.lua src/X7/Kiss.lua src/common/KissUI.lua > X7SP.lua
 	cat src/common/KissProtocolSPort.lua src/Horus/Kiss.lua src/common/KissUI.lua > HorusSP.lua
@@ -27,16 +26,15 @@ prepare:
 
 .PHONY: lua
 lua:
-	#./node_modules/luamin/bin/luamin --file X7SP.lua > tmp/X7/KissSP.lua
 	cp X9SP.lua tmp/X9/KissSP.lua
 	cp X7SP.lua tmp/X7/KissSP.lua
 	cp HorusSP.lua tmp/Horus/KissSP.lua
 	cp X9CF.lua tmp/X9/KissCF.lua
 	cp X7CF.lua tmp/X7/KissCF.lua
 	cp HorusCF.lua tmp/Horus/KissCF.lua
-	cp -R src/X7/screens tmp/X7/screens
-	cp -R src/X9/screens tmp/X9/screens
-	cp -R src/Horus/screens tmp/Horus/screens
+	cp -R src/X7/KISS tmp/X7/KISS
+	cp -R src/X9/KISS tmp/X9/KISS
+	cp -R src/Horus/KISS tmp/Horus/KISS
 	find ./tmp/ -type f -name '*.lua' -exec sh -c './node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
 	
 .PHONY: zip

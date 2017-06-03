@@ -2,20 +2,20 @@
 		read  = 0x47, 
 		write = 0x48,
 		
-		postRead = function(page)
-   			local filters = {}
-   			filters[1] = page.values[3] + 1
-   			filters[2] = bit32.lshift(page.values[4], 8) + page.values[5]
-   			filters[3] = bit32.lshift(page.values[6], 8) + page.values[7]
-   			filters[4] = page.values[8] + 1
-   			filters[5] = bit32.lshift(page.values[9], 8) + page.values[10]
-   			filters[6] = bit32.lshift(page.values[11], 8) + page.values[12]
-   			filters[7] = page.values[1] + 1
-   			filters[8] = page.values[2]
-   			return filters
+		postRead = function(values)
+   			local ret = {}
+   			ret[1] = values[3] + 1
+   			ret[2] = bit32.lshift(values[4], 8) + values[5]
+   			ret[3] = bit32.lshift(values[6], 8) + values[7]
+   			ret[4] = values[8] + 1
+   			ret[5] = bit32.lshift(values[9], 8) + values[10]
+   			ret[6] = bit32.lshift(values[11], 8) + values[12]
+   			ret[7] = values[1] + 1
+   			ret[8] = values[2]
+   			return ret
 		end,
 
-		getWriteValuesFilters = function(values)
+		preWrite = function(values)
    			local ret = {}
    			ret[1] = bit32.band(values[7]-1, 0xFF)
    			ret[2] = bit32.band(values[8], 0xFF)

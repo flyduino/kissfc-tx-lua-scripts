@@ -2,14 +2,14 @@
 		read  = 0x49, 
 		write = 0x4A,
 		
-		postRead = function(page)
-   			local alarms = {}
-   			alarms[1] = 100 * (bit32.lshift(page.values[1], 8) + page.values[2])
-   			alarms[2] = bit32.lshift(page.values[3], 8) + page.values[4]
-  	 		return alarms
+		postRead = function(values)
+   			local ret = {}
+   			ret[1] = 100 * (bit32.lshift(values[1], 8) + values[2])
+   			ret[2] = bit32.lshift(values[3], 8) + values[4]
+  	 		return ret
 		end,
 
-		getWriteValues = function(values)
+		preWrite = function(values)
    			local ret = {}
    			local tmp = bit32.band(math.floor(values[1]/100), 0xFFFF)
    			ret[1] = bit32.band(bit32.rshift(tmp, 8), 0xFF)
