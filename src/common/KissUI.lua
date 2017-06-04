@@ -22,6 +22,7 @@ local lastRunTS = 0
 
 local gState = PAGE_DISPLAY
 ActivePage = nil
+
 AllPages = { "pids", "rates", "tpa", "filters", "alarms", "vtx" }
 
 local function formatKissFloat(v, d)
