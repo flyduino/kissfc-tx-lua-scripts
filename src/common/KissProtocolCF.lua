@@ -11,20 +11,8 @@ FC_RESPONSE_COMMAND = 0x79
 local kissLastReq = 0
 local kissTxBuf = {}
 
--- Format kiss float value
-local function formatKissFloat(v, d)
-	local s = string.format("%0.4d", v);
-	local part1 = string.sub(s, 1, string.len(s)-3)
-	local part2 = string.sub(string.sub(s,-3), 1, d)
-	if d>0 then 
-		return part1.."."..part2
-	else
-		return part1
-	end
-end
-
-local function isTelemetryPresent() 
-	return true
+local function isTelemetryPresent()
+  return true
 end
 
 local function subrange(t, first, last)
@@ -36,94 +24,94 @@ local function subrange(t, first, last)
 end
 
 local function kissProcessTxQ()
-   if (#(kissTxBuf) == 0) then
-      return false
-   end
+  if (#(kissTxBuf) == 0) then
+    return false
+  end
 
-   if not crossfireTelemetryPush() then
-      return true
-   end
+  if not crossfireTelemetryPush() then
+    return true
+  end
 
-   local tmp = {}
-   tmp[1] = REMOTE_DEVICE_ID
-   tmp[2] = LOCAL_DEVICE_ID
-   for i=1,#(kissTxBuf) do
-   		tmp[2 + i] = kissTxBuf[i]
-   end
-   local ret = crossfireTelemetryPush(FC_REQUEST_COMMAND, tmp)
-  
-   kissTxBuf = {}
-   return false
+  local tmp = {}
+  tmp[1] = REMOTE_DEVICE_ID
+  tmp[2] = LOCAL_DEVICE_ID
+  for i=1,#(kissTxBuf) do
+    tmp[2 + i] = kissTxBuf[i]
+  end
+  local ret = crossfireTelemetryPush(FC_REQUEST_COMMAND, tmp)
+
+  kissTxBuf = {}
+  return false
 end
 
 local function kissSendRequest(cmd, payload)
-   if #(kissTxBuf) ~= 0 then
-      return nil
-   end
+  if #(kissTxBuf) ~= 0 then
+    return nil
+  end
 
-   local crc = 0
+  local crc = 0
 
-   kissTxBuf[1] = bit32.band(cmd, 0xFF)  -- KISS command
-   kissTxBuf[2] = bit32.band(#(payload), 0xFF) -- KISS payload size
+  kissTxBuf[1] = bit32.band(cmd, 0xFF)  -- KISS command
+  kissTxBuf[2] = bit32.band(#(payload), 0xFF) -- KISS payload size
 
-   for i=1,#(payload) do
-      kissTxBuf[i+2] = payload[i]
-      crc = bit32.bxor(crc, payload[i]);
-      for i=1,8 do
-       	if bit32.band(crc, 0x80) ~= 0 then
-       		crc = bit32.bxor(bit32.lshift(crc, 1), 0xD5)
-       	else
-       		crc = bit32.lshift(crc, 1)
-       	end
-       	crc = bit32.band(crc, 0xFF)
+  for i=1,#(payload) do
+    kissTxBuf[i+2] = payload[i]
+    crc = bit32.bxor(crc, payload[i]);
+    for i=1,8 do
+      if bit32.band(crc, 0x80) ~= 0 then
+        crc = bit32.bxor(bit32.lshift(crc, 1), 0xD5)
+      else
+        crc = bit32.lshift(crc, 1)
       end
-   end
-   kissTxBuf[#(payload)+3] = crc
-   kissLastReq = cmd
-   return kissProcessTxQ()
+      crc = bit32.band(crc, 0xFF)
+    end
+  end
+  kissTxBuf[#(payload)+3] = crc
+  kissLastReq = cmd
+  return kissProcessTxQ()
 end
 
 local function kissReceivedReply(payload)
-    local crc = 0
-    
-    for i=3, (#(payload)-1) do
-      	crc = bit32.bxor(crc, payload[i]);
-      	for i=1,8 do
-       		if bit32.band(crc, 0x80) ~= 0 then
-       			crc = bit32.bxor(bit32.lshift(crc, 1), 0xD5)
-       		else
-       			crc = bit32.lshift(crc, 1)
-       		end
-       		crc = bit32.band(crc, 0xFF)
-      	end
-    end
+  local crc = 0
 
-    if crc ~= payload[#(payload)] then
-   		return nil
-   	end
- 
- 	return subrange(payload, 3, #(payload)-1)
+  for i=3, (#(payload)-1) do
+    crc = bit32.bxor(crc, payload[i]);
+    for i=1,8 do
+      if bit32.band(crc, 0x80) ~= 0 then
+        crc = bit32.bxor(bit32.lshift(crc, 1), 0xD5)
+      else
+        crc = bit32.lshift(crc, 1)
+      end
+      crc = bit32.band(crc, 0xFF)
+    end
+  end
+
+  if crc ~= payload[#(payload)] then
+    return nil
+  end
+
+  return subrange(payload, 3, #(payload)-1)
 end
 
 local function kissPollReply()
 
-   while true do
-      local command, value = crossfireTelemetryPop()
-      if command == nil then
-      	break
-      end
- 
-      if (value ~=nil) then -- bit32.band(command, 0xFF) == 0x79
-         local ret = kissReceivedReply(subrange(value, 3, #(value)))
-         if type(ret) == "table" then
-            return kissLastReq,ret
-         end
-      else
-         break
-      end
-   end
+  while true do
+    local command, value = crossfireTelemetryPop()
+    if command == nil then
+      break
+    end
 
-   return nil
+    if (value ~=nil) then -- bit32.band(command, 0xFF) == 0x79
+      local ret = kissReceivedReply(subrange(value, 3, #(value)))
+      if type(ret) == "table" then
+        return kissLastReq,ret
+      end
+    else
+      break
+    end
+  end
+
+  return nil
 end
 
 --
