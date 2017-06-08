@@ -28,7 +28,7 @@ return {
   fields = {
     { t = "Band",         x = 15,  y = 14, sp = 70, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
     { t = "Channel",      x = 15,  y = 27, sp = 70, i=3, min=1, max=8 },
-    { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=600 },
-    { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=600 }
+    { t = "Low Power",    x = 15,  y = 40, sp = 70, i=4, min=0, max=800 },
+    { t = "High Power",   x = 15,  y = 53, sp = 70, i=5, min=0, max=800 }
   }
 }
