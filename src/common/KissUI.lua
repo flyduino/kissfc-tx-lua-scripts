@@ -22,7 +22,8 @@ local lastRunTS = 0
 
 local gState = PAGE_DISPLAY
 ActivePage = nil
-AllPages = { "pids", "rates", "filters", "alarms", "vtx" }
+
+AllPages = { "pids", "rates", "tpa", "filters", "alarms", "vtx" }
 
 local function formatKissFloat(v, d)
 	local s = string.format("%0.4d", v);
@@ -164,7 +165,7 @@ local function drawScreen(page_locked)
    if ActivePage.lines ~= nil then
    	for i=1,#(ActivePage.lines) do
     	  local f = ActivePage.lines[i]
-      	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, FORCE)
+      	lcd.drawLine (f.x1, f.y1, f.x2, f.y2, SOLID, 0)
    	end
    end
    
