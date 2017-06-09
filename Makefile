@@ -1,5 +1,5 @@
 
-VERSION = 0.6
+VERSION = 0.7
 
 .PHONY: all
 all: clean prepare luatmp lua
