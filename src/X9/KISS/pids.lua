@@ -44,5 +44,9 @@ return {
     { x = 35,  y = 50, i=7, max=65000, prec=2 },
     { x = 90,  y = 50, i=8, max=65000, prec=3 },
     { x = 145, y = 50, i=9, max=65000, prec=2 }
-  }
+  },
+  wrName = {},
+  dL = 45,
+  data = {},
+  defValues = "Default___ 3000   3510000 3000   3510000 8000   50    0"
 }

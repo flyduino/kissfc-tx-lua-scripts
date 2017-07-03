@@ -29,6 +29,15 @@ local kissTxIdx = 1
 local kissTxCRC = 0
 local kissTxPk = 0
 
+local CP = {}
+local AP = {}
+local CPvN = {}
+local sVal
+local APValues = {}
+local nL = 10 --DataSet Name Length
+local payload
+local activeField = 0
+
 local function isTelemetryPresent()
   return getValue("RSSI")>0
 end

@@ -39,5 +39,9 @@ return {
     { x = 16,  y = 50, i=7, max=65000, prec=2 },
     { x = 48,  y = 50, i=8, max=65000, prec=2 },
     { x = 80,  y = 50, i=9, max=65000, prec=2 }
-  }
+  },
+  wrName = {},
+  dL = 45,
+  data = {},
+  defValues= "Default___   70   70   40   70   70   40   70   70   40"
 }

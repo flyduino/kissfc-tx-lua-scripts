@@ -9,7 +9,6 @@ return {
     end
     return ret
   end,
-  
   preWrite = function(values)
     local ret = {}
     for i=1,9 do
@@ -41,5 +40,9 @@ return {
     { x = 35,  y = 50, i=7, max=65000, prec=2 },
     { x = 90,  y = 50, i=8, max=65000, prec=2 },
     { x = 145, y = 50, i=9, max=65000, prec=2 }
-  }
+  },
+  wrName = {},
+  dL = 45,
+  data = {},
+  defValues= "Default___   70   70   40   70   70   40   70   70   40"
 }

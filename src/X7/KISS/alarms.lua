@@ -24,5 +24,9 @@ return {
   fields = {
     { t = "VBat",    x = 15,  y = 27, sp = 70, i=1, min=0, max=26000, prec=1 },
     { t = "mAH",     x = 15,  y = 40, sp = 70, i=2, min=0, max=26000, inc=10 }
-  }
+  },
+  wrName = {},
+  dL = 10,
+  data = {},
+  defValues = "Default___14400 1000"
 }
