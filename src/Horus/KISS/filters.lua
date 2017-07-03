@@ -52,5 +52,9 @@ return {
     { x = 289,  y = 124,  i=6, min=0, max=490 },
     { x = 129,  y = 158,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
     { x = 129,  y = 186,  i=8, min=0, max=97},
-  }
+  },
+  wrName = {},
+  dL = 40,
+  data = {},
+  defValues = "Default___    1  200  100    1  200  100    1   35"
 }

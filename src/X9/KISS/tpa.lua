@@ -51,5 +51,9 @@ return {
     { x = 90,  y = 53, i=8, max=100},
     { x = 120, y = 53, i=9, max=100},
     { x = 150, y = 53, i=10,max=100},
-  }
+  },
+  wrName = {},
+  dL = 50,
+  data = {},
+  defValues = "Default___   40   20   40    1   30   50   30    0    0  100"
 }

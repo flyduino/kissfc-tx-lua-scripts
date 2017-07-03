@@ -25,5 +25,9 @@ return {
     -- Alarms
     { t = "VBat",    x = 100,  y = 96, sp = 60, i=1, min=0, max=26000, prec=1 },
     { t = "mAH",     x = 250,  y = 96, sp = 60, i=2, min=0, max=26000, inc=10 }
-  }
+  },
+  wrName = {},
+  dL = 10,
+  data = {},
+  defValues = "Default___14400 1000"
 }

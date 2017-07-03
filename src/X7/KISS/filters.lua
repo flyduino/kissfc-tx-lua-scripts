@@ -54,5 +54,9 @@ return {
     { x = 80,  y = 38,  i=6, min=0, max=490 },
     { x = 15,  y = 52,  i=7, min=1, max=7, table = { "Off", "High", "MedHi", "Med", "MedLo", "Low", "VerLo" } },
     { x = 80,  y = 52,  i=8, min=0, max=97},
-  }
+  },
+  wrName = {},
+  dL = 40,
+  data = {},
+  defValues = "Default___    1  200  100    1  200  100    1   35"
 }

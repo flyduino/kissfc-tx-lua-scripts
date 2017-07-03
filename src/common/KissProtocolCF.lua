@@ -11,6 +11,15 @@ FC_RESPONSE_COMMAND = 0x79
 local kissLastReq = 0
 local kissTxBuf = {}
 
++local CP = {}
++local AP = {}
++local CPvN = {}
++local sVal
++local APValues = {}
++local nL = 10 --DataSet Name Length
++local payload
++local activeField = 0
+
 local function isTelemetryPresent()
   return true
 end
