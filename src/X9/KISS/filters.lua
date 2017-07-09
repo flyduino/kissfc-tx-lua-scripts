@@ -12,6 +12,8 @@ return {
     ret[6] = bit32.lshift(values[11], 8) + values[12]
     ret[7] = values[1] + 1
     ret[8] = values[2]
+    ret[9] = values[13] + 1
+    ret[10] = values[14] + 1
     return ret
   end,
 
@@ -29,27 +31,36 @@ return {
     ret[10] = bit32.band(values[5], 0xFF)
     ret[11] = bit32.band(bit32.rshift(values[6], 8), 0xFF)
     ret[12] = bit32.band(values[6], 0xFF)
+    ret[13] = bit32.band(values[9]-1, 0xFF)
+    ret[14] = bit32.band(values[10]-1, 0xFF)
     return ret
   end,
 
   title = "Filters",
   text = {
-    { t = "Center", x = 100, y = 14 },
-    { t = "Cutoff", x = 150, y = 14 },
-    { t = "Notch Filter", x = 10,  y = 14 },
-    { t = "Roll",  x = 10,  y = 25 },
-    { t = "Pitch", x = 10,  y = 38 },
-    { t = "LPF",   x = 10,  y = 52 },
-    { t = "Yaw",   x = 110, y = 52 }
+    { t = "Center", x = 100, y = 10 }, 
+    { t = "Cutoff", x = 150, y = 10 },
+    { t = "Notch Filter", x = 10,  y = 10 },
+    { t = "Roll",  x = 10,  y = 21 },
+    { t = "Pitch", x = 10,  y = 32 },
+    { t = "R/P LPF",   x = 10,  y = 44 },
+    { t = "Yaw Filter",  x = 110, y = 44 },
+    { t = "Yaw LPF",     x = 10,  y = 55 },
+    { t = "Dterm LPF",   x = 110, y = 55 }
+  },
+  lines = {
+    { x1 = 1, y1 = 41, x2 = 210, y2 = 41 }
   },
   fields = {
-    { x = 35,  y = 25,  i=1, min=1, max=2, table = { "Off", "On" }},
-    { x = 90,  y = 25,  i=2, min=0, max=490 },
-    { x = 145, y = 25,  i=3, min=0, max=490 },
-    { x = 35,  y = 38,  i=4, min=1, max=2, table = { "Off", "On" }},
-    { x = 90,  y = 38,  i=5, min=0, max=490 },
-    { x = 145, y = 38,  i=6, min=0, max=490 },
-    { x = 35,  y = 52,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
-    { x = 145, y = 52,  i=8, min=0, max=97},
+    { x = 35,  y = 21,  i=1, min=1, max=2, table = { "Off", "On" }},
+    { x = 90,  y = 21,  i=2, min=0, max=490 },
+    { x = 145, y = 21,  i=3, min=0, max=490 },
+    { x = 35,  y = 32,  i=4, min=1, max=2, table = { "Off", "On" }},
+    { x = 90,  y = 32,  i=5, min=0, max=490 },
+    { x = 145, y = 32,  i=6, min=0, max=490 },
+    { x = 35,  y = 44,  i=7, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
+    { x = 145, y = 44,  i=8, min=0, max=97},
+    { x = 35,  y = 55,  i=9, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
+    { x = 145, y = 55,  i=10, min=1, max=7, table = { "Off", "High", "Med. High", "Medium", "Med. Low", "Low", "Very Low" } },
   }
 }
