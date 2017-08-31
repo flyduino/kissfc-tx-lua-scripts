@@ -101,7 +101,11 @@ local function kissPollReply()
       break
     end
 
-    if (value ~=nil) then -- bit32.band(command, 0xFF) == 0x79
+    if (bit32.band(command, 0xFF) ~= FC_RESPONSE_COMMAND) then
+      break
+    end
+
+    if (value ~=nil) then
       local ret = kissReceivedReply(subrange(value, 3, #(value)))
       if type(ret) == "table" then
         return kissLastReq,ret

@@ -1,5 +1,5 @@
 
-VERSION = 0.8
+VERSION = 0.9
 
 .PHONY: all
 all: clean prepare luatmp lua
@@ -35,7 +35,7 @@ lua:
 	cp -R src/X7/KISS tmp/X7/KISS
 	cp -R src/X9/KISS tmp/X9/KISS
 	cp -R src/Horus/KISS tmp/Horus/KISS
-	find ./tmp/ -type f -name '*.lua' -exec sh -c './node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
+	#find ./tmp/ -type f -name '*.lua' -exec sh -c './node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
 	
 .PHONY: zip
 zip: 
