@@ -12,7 +12,3 @@ Please visit the [releases page](https://github.com/fedorcomander/kissfc-tx-lua-
 
 Unzip the files from the link above and copy both the file and the folder(!) into the **/SCRIPTS/TELEMETRY** folder on your SD card.
 
-## You like what I do and want to support feel free to become my patron or donate via paypal
-
-* www.patreon.com/fedorcommander
-* www.paypal.me/FedorCommander
