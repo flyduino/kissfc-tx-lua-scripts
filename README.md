@@ -8,7 +8,7 @@ Please visit the [releases page](https://github.com/fedorcomander/kissfc-tx-lua-
 
 ## Installing
 
-!! IMPORTANT: DON'T COPY THE CONTENTS OF THIS REPOSITORY ONTO YOUR SDCARD !!
+## !! IMPORTANT: DON'T COPY THE CONTENTS OF THIS REPOSITORY ONTO YOUR SDCARD !!
 
 Unzip the files from the link above and copy both the file and the folder(!) into the **/SCRIPTS/TELEMETRY** folder on your SD card.
 
