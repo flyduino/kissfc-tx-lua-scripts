@@ -23,7 +23,7 @@ local lastRunTS = 0
 local gState = PAGE_DISPLAY
 ActivePage = nil
 
-AllPages = { "pids", "rates", "tpa", "filters", "alarms", "vtx" }
+AllPages = { "pids", "rates", "tpa", "filters", "alarms", "vtx", "setpnt" }
 
 local function formatKissFloat(v, d)
 	local s = string.format("%0.4d", v);
