@@ -17,6 +17,6 @@ return {
   title = "Setpoints",
   text = {},
   fields = {
-    { t = "D Setpoint",    x = 100,  y = 96, sp = 60, i=1, min=0, max=100 }
+    { t = "D Setpoint",    x = 100,  y = 96, sp = 70, i=1, min=0, max=100 }
   }
 }
