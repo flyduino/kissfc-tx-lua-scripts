@@ -11,7 +11,8 @@
 SPORT_KISS_VERSION = bit32.lshift(1,5)
 SPORT_KISS_STARTFLAG = bit32.lshift(1,4)
 LOCAL_SENSOR_ID  = 0x0D
-REMOTE_SENSOR_ID = 0x1B
+REMOTE_SENSOR_ID_1 = 0x1B
+REMOTE_SENSOR_ID_2 = 0x00
 REQUEST_FRAME_ID = 0x30
 REPLY_FRAME_ID   = 0x32
 
@@ -203,7 +204,7 @@ local function kissPollReply()
   while true do
     local sensorId, frameId, dataId, value = sportTelemetryPop()
 
-    if sensorId == REMOTE_SENSOR_ID and frameId == REPLY_FRAME_ID then
+    if (sensorId == REMOTE_SENSOR_ID_1 or sensorId == REMOTE_SENSOR_ID_2) and frameId == REPLY_FRAME_ID then
 
       local payload = {}
       payload[1] = bit32.band(dataId,0xFF)
