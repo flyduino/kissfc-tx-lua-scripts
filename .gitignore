@@ -1,5 +1,18 @@
+.DS_store
+nbproject/
+.idea
+.project
+.settings/
+.vscode/
 node_modules/
-tmp
+npm-debug.log
+build/
+cache/
+apps/
+dist/
+debug/
+release/
+tmp/
 
 KissFC.lua
 KissHorus.lua
