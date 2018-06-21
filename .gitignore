@@ -1,3 +1,6 @@
+node_modules/
+tmp
+
 KissFC.lua
 KissHorus.lua
 KissX7.lua
@@ -13,7 +16,6 @@ TmpX7CF.lua
 TmpX7SP.lua
 TmpX9CF.lua
 TmpX9SP.lua
-tmp
 HorusCF.lua
 HorusSP.lua
 X7CF.lua
