@@ -1,5 +1,6 @@
 
 VERSION = 0.12
+GIT_HASH = $(shell git log -1 --pretty=format:"%h")
 
 .PHONY: all
 all: clean prepare luatmp lua
@@ -49,10 +50,10 @@ lua:
 .PHONY: zip
 zip: 
 	test -d dist || mkdir dist
-	cd tmp/X9/; zip -r ../../dist/kiss-x9-lua-scripts-${VERSION}.zip *
-	cd tmp/X7/; zip -r ../../dist/kiss-x7-lua-scripts-${VERSION}.zip *
-	cd tmp/X-Lite/; zip -r ../../dist/kiss-x_lite-lua-scripts-${VERSION}.zip *
-	cd tmp/Horus/; zip -r ../../dist/kiss-horus-lua-scripts-${VERSION}.zip *
+	cd tmp/X9/; zip -r ../../dist/kiss-x9-lua-scripts-${VERSION}-${GIT_HASH}.zip *
+	cd tmp/X7/; zip -r ../../dist/kiss-x7-lua-scripts-${VERSION}-${GIT_HASH}.zip *
+	cd tmp/X-Lite/; zip -r ../../dist/kiss-x_lite-lua-scripts-${VERSION}-${GIT_HASH}.zip *
+	cd tmp/Horus/; zip -r ../../dist/kiss-horus-lua-scripts-${VERSION}-${GIT_HASH}.zip *
 	
 .PHONY: dist
 dist:   clean prepare luatmp lua zip
