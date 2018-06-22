@@ -284,9 +284,9 @@ local function run(event)
    elseif gState == MENU_DISP then
       if event == EVT_EXIT_BREAK then
          gState = PAGE_DISPLAY
-      elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT then
+      elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT or event == EVT_UP_BREAK then
          incMenu(-1)
-      elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT then
+      elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT or event == EVT_DOWN_BREAK then
          incMenu(1)
       elseif event == EVT_ENTER_BREAK then
       	if RADIO == "HORUS" then
@@ -305,7 +305,7 @@ local function run(event)
    elseif gState <= PAGE_DISPLAY then
    	  if event == EVT_PAGEUP_FIRST or event == EVT_LEFT_BREAK then
          incPage(-1)
-      elseif event == EVT_MENU_BREAK or event == EVT_PAGEDN_FIRST or event == EVT_SHIFT_BREAK then
+      elseif event == EVT_MENU_BREAK or event == EVT_PAGEDN_FIRST or event == EVT_RIGHT_BREAK then
          incPage(1)
       elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT or event == EVT_UP_BREAK then
          incLine(-1)
