@@ -21,6 +21,8 @@ luatmp:
 clean:
 	rm -f *.lua
 	rm -rf tmp
+	rm -rf dist
+	rm -rf release
 
 .PHONY: prepare
 prepare:

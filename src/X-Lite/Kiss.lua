@@ -3,7 +3,7 @@
 local RADIO = "X-Lite"
 
 local drawScreenTitle = function(title, currentPage, totalPages)
-  lcd.drawScreenTitle('Kiss Setup:  '..title, currentPage, totalPages)
+  lcd.drawScreenTitle('KISS LUA:  '..title, currentPage, totalPages)
 end
 
 local drawTelemetry = function()
@@ -38,7 +38,7 @@ local function getDefaultTextOptions()
 	return 0
 end
 
-local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_RIGHT_BREAK,0x1f),0x80)
+ local EVT_MENU_LONG 
 
 -- END X-Lite
 
