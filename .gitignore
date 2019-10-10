@@ -13,3 +13,4 @@ debug/
 release/
 obj/
 tmp/
+node_modules/
