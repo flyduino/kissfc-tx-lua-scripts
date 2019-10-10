@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lichtl/kissfc-tx-lua-scripts.git"
+    "url": "git+https://github.com/flyduino/kissfc-tx-lua-scripts.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lichtl/kissfc-tx-lua-scripts/issues"
+    "url": "https://github.com/flyduino/kissfc-tx-lua-scripts/issues"
   },
-  "homepage": "https://github.com/lichtl/kissfc-tx-lua-scripts#readme",
+  "homepage": "https://github.com/flyduino/kissfc-tx-lua-scripts#readme",
   "devDependencies": {
     "luamin": "^1.0.4"
   }
