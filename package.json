@@ -1,0 +1,22 @@
+{
+  "name": "kissfc-tx-lua-scripts",
+  "version": "1.0.0",
+  "description": "Kiss Lua configuration script for taranis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lichtl/kissfc-tx-lua-scripts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lichtl/kissfc-tx-lua-scripts/issues"
+  },
+  "homepage": "https://github.com/lichtl/kissfc-tx-lua-scripts#readme",
+  "devDependencies": {
+    "luamin": "^1.0.4"
+  }
+}
