@@ -29,7 +29,7 @@ return {
     -- VTX
     { t = "Band",         x = 35,  y = 96,  sp = 100, i=2, min=1, max=5, table = { "A", "B", "E", "FS", "RB" } },
     { t = "Channel",      x = 210, y = 96,  sp = 120, i=3, min=1, max=8 },
-    { t = "Low Power",    x = 35,  y = 158, sp = 100, i=4, min=0, max=800 },
-    { t = "High Power",   x = 210, y = 158, sp = 120, i=5, min=0, max=800 }
+    { t = "Low Power",    x = 35,  y = 158, sp = 100, i=4, min=0, max=2000 },
+    { t = "High Power",   x = 210, y = 158, sp = 120, i=5, min=0, max=2000 }
   }
 }
