@@ -8,7 +8,5 @@ Please visit the [releases page](https://github.com/flyduino/kissfc-tx-lua-scrip
 
 ## Installing
 
-## !! IMPORTANT: DON'T COPY THE CONTENTS OF THIS REPOSITORY ONTO YOUR SDCARD !!
-
-Unzip the files from the link above and copy both the file and the folder(!) into the **/SCRIPTS/TELEMETRY** folder on your SD card.
+Unzip the files from the release page and copy it on the root folder on your SD card.
 
