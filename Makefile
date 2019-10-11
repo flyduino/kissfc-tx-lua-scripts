@@ -28,43 +28,30 @@ clean:
 
 .PHONY: prepare
 prepare:
-	mkdir -p obj/X9/SCRIPTS/TELEMETRY/
-	mkdir -p obj/X7/SCRIPTS/TELEMETRY/
-	mkdir -p obj/Horus/SCRIPTS/TELEMETRY/
-	mkdir -p obj/X-Lite/SCRIPTS/TELEMETRY/
-	mkdir -p obj/X9/SCRIPTS/TOOLS/
-	mkdir -p obj/X7/SCRIPTS/TOOLS/
-	mkdir -p obj/Horus/SCRIPTS/TOOLS/
-	mkdir -p obj/X-Lite/SCRIPTS/TOOLS/
-	mkdir -p obj/X9/SCRIPTS/FUNCTIONS/
-	mkdir -p obj/X7/SCRIPTS/FUNCTIONS/
-	mkdir -p obj/Horus/SCRIPTS/FUNCTIONS/
-	mkdir -p obj/X-Lite/SCRIPTS/FUNCTIONS/
+	mkdir -p obj/X9/
+	mkdir -p obj/X7/
+	mkdir -p obj/Horus/
+	mkdir -p obj/X-Lite/
+
 	mkdir -p tmp/
 .PHONY: lua
 lua:
-	cp tmp/X9SP.lua obj/X9/SCRIPTS/TELEMETRY/KissSP.lua
-	cp tmp/X7SP.lua obj/X7/SCRIPTS/TELEMETRY/KissSP.lua
-	cp tmp/X-LiteSP.lua obj/X-Lite/SCRIPTS/TELEMETRY/KissSP.lua
-	cp tmp/HorusSP.lua obj/Horus/SCRIPTS/TELEMETRY/KissSP.lua
-	cp tmp/X9SP.lua obj/X9/SCRIPTS/TOOLS/KissSP.lua
-	cp tmp/X7SP.lua obj/X7/SCRIPTS/TOOLS/KissSP.lua
-	cp tmp/X-LiteSP.lua obj/X-Lite/SCRIPTS/TOOLS/KissSP.lua
-	cp tmp/HorusSP.lua obj/Horus/SCRIPTS/TOOLS/KissSP.lua
+	cp tmp/X9SP.lua obj/X9/KissSP.lua
+	cp tmp/X7SP.lua obj/X7/KissSP.lua
+	cp tmp/X-LiteSP.lua obj/X-Lite/KissSP.lua
+	cp tmp/HorusSP.lua obj/Horus/KissSP.lua
 
-	cp tmp/X9CF.lua obj/X9/SCRIPTS/TELEMETRY/KissCF.lua
-	cp tmp/X7CF.lua obj/X7/SCRIPTS/TELEMETRY/KissCF.lua
-	cp tmp/X-LiteCF.lua obj/X-Lite/SCRIPTS/TELEMETRY/KissCF.lua
-	cp tmp/HorusCF.lua obj/Horus/SCRIPTS/TELEMETRY/KissCF.lua
-	cp tmp/X9CF.lua obj/X9/SCRIPTS/TOOLS/KissCF.lua
-	cp tmp/X7CF.lua obj/X7/SCRIPTS/TOOLS/KissCF.lua
-	cp tmp/X-LiteCF.lua obj/X-Lite/SCRIPTS/TOOLS/KissCF.lua
-	cp tmp/HorusCF.lua obj/Horus/SCRIPTS/TOOLS/KissCF.lua
 
-	cp -R src/X7/KISS obj/X7/SCRIPTS/FUNCTIONS/KISS
-	cp -R src/X7/KISS obj/X-Lite/SCRIPTS/FUNCTIONS/KISS
-	cp -R src/X9/KISS obj/X9/SCRIPTS/FUNCTIONS/KISS
-	cp -R src/Horus/KISS obj/Horus/SCRIPTS/FUNCTIONS/KISS
+	cp tmp/X9CF.lua obj/X9/KissCF.lua
+	cp tmp/X7CF.lua obj/X7/KissCF.lua
+	cp tmp/X-LiteCF.lua obj/KissCF.lua
+	cp tmp/HorusCF.lua obj/Horus/KissCF.lua
+
+
+	cp -R src/X7/KISS obj/X7/KISS
+	cp -R src/X7/KISS obj/X-Lite/KISS
+	cp -R src/X9/KISS obj/X9/KISS
+	cp -R src/Horus/KISS obj/Horus/KISS
 
 	find ./obj/ -type f -name '*.lua' -exec sh -c 'node node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
 		

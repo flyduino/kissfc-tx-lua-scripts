@@ -75,7 +75,7 @@ local function invalidatePage()
 end
 
 local function loadPage(pageId) 
-	local file = "/SCRIPTS/FUNCTIONS/KISS/"..AllPages[pageId]..".lua"
+	local file = "/KISS/"..AllPages[pageId]..".lua"
 	clearTable(ActivePage)
 	local tmp = assert(loadScript(file))
     ActivePage = tmp()
