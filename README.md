@@ -10,5 +10,5 @@ Please visit the [releases page](https://github.com/flyduino/kissfc-tx-lua-scrip
 
 ## !! IMPORTANT: DON'T COPY THE CONTENTS OF THIS REPOSITORY ONTO YOUR SDCARD !!
 
-Unzip the files from the link above and copy both the file and the folder(!) into the **/SCRIPTS/TELEMETRY** folder on your SD card.
+Unzip the files from the link above and copy both of the lua files into either/both **/SCRIPTS/TELEMETRY** (for telemetry page) or **/SCRIPTS/TOOLS** (to be shown in tools section introduced in Open-TX 2.3.0). In addition the **KISS* folder has to be placed in the root folder on your SD card.
 
