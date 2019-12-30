@@ -1,6 +1,6 @@
--- BEGIN X7
+-- BEGIN X7 / XLITE
 
-local RADIO = "X7"
+local RADIO = "128x64"
 
 local drawScreenTitle = function(title, currentPage, totalPages)
   lcd.drawScreenTitle('Kiss Setup:  '..title, currentPage, totalPages)
@@ -38,7 +38,7 @@ local function getDefaultTextOptions()
 	return 0
 end
 
-local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
+local EVT_VIRTUAL_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
 
 -- END X7
 

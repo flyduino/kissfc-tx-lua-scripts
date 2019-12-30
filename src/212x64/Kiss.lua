@@ -1,7 +1,7 @@
 
 -- BEGIN X9
 
-RADIO = "X9"
+local RADIO = "212x64"
 
 local drawScreenTitle = function(title, currentPage, totalPages)
 	lcd.drawScreenTitle('Kiss Setup:  '..title, currentPage, totalPages)
@@ -39,6 +39,6 @@ local function getDefaultTextOptions()
 	return 0
 end
 
-local EVT_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
+local EVT_VIRTUAL_MENU_LONG = bit32.bor(bit32.band(EVT_MENU_BREAK,0x1f),0x80)
 
 -- END X9

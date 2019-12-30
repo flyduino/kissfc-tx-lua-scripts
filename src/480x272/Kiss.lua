@@ -1,6 +1,6 @@
--- BEGIN HORUS
+-- BEGIN HORUS / T16
 
-local RADIO = "HORUS"
+local RADIO = "480x272"
 
 local drawScreenTitle = function(title, currentPage, totalPages)
    lcd.drawFilledRectangle(0, 0, LCD_W, 30, TITLE_BGCOLOR)

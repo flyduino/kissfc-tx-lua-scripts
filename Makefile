@@ -1,5 +1,5 @@
 
-VERSION = 0.14
+VERSION = 1.0.0
 GIT_HASH = $(shell git log -1 --pretty=format:"%h")
 
 .PHONY: all
@@ -7,14 +7,13 @@ all: clean prepare luatmp lua zip
 
 .PHONY: luatmp
 luatmp:
-	cat src/common/KissProtocolSPort.lua src/X9/Kiss.lua src/common/KissUI.lua > tmp/X9SP.lua
-	cat src/common/KissProtocolSPort.lua src/X7/Kiss.lua src/common/KissUI.lua > tmp/X7SP.lua
-	cat src/common/KissProtocolSPort.lua src/X-Lite/Kiss.lua src/common/KissUI.lua > tmp/X-LiteSP.lua
-	cat src/common/KissProtocolSPort.lua src/Horus/Kiss.lua src/common/KissUI.lua > tmp/HorusSP.lua
-	cat src/common/KissProtocolCF.lua src/X9/Kiss.lua src/common/KissUI.lua > tmp/X9CF.lua
-	cat src/common/KissProtocolCF.lua src/X7/Kiss.lua src/common/KissUI.lua > tmp/X7CF.lua
-	cat src/common/KissProtocolCF.lua src/X-Lite/Kiss.lua src/common/KissUI.lua > tmp/X-LiteCF.lua
-	cat src/common/KissProtocolCF.lua src/Horus/Kiss.lua src/common/KissUI.lua > tmp/HorusCF.lua
+	cat src/common/KissProtocolSPort.lua src/212x64/Kiss.lua src/common/KissUI.lua > tmp/212x64_SPORT.lua
+	cat src/common/KissProtocolSPort.lua src/128x64/Kiss.lua src/common/KissUI.lua > tmp/128x64_SPORT.lua
+	cat src/common/KissProtocolSPort.lua src/480x272/Kiss.lua src/common/KissUI.lua > tmp/480x272_SPORT.lua
+	
+	cat src/common/KissProtocolCF.lua src/212x64/Kiss.lua src/common/KissUI.lua > tmp/212x64_CF.lua
+	cat src/common/KissProtocolCF.lua src/128x64/Kiss.lua src/common/KissUI.lua > tmp/128x64_CF.lua
+	cat src/common/KissProtocolCF.lua src/480x272/Kiss.lua src/common/KissUI.lua > tmp/480x272_CF.lua
 
 
 
@@ -28,40 +27,34 @@ clean:
 
 .PHONY: prepare
 prepare:
-	mkdir -p obj/X9/
-	mkdir -p obj/X7/
-	mkdir -p obj/Horus/
-	mkdir -p obj/X-Lite/
+	mkdir -p obj/212x64/
+	mkdir -p obj/128x64/
+	mkdir -p obj/480x272/
 
 	mkdir -p tmp/
 .PHONY: lua
 lua:
-	cp tmp/X9SP.lua obj/X9/KissSP.lua
-	cp tmp/X7SP.lua obj/X7/KissSP.lua
-	cp tmp/X-LiteSP.lua obj/X-Lite/KissSP.lua
-	cp tmp/HorusSP.lua obj/Horus/KissSP.lua
+	cp tmp/212x64_SPORT.lua obj/212x64/KissSP.lua
+	cp tmp/128x64_SPORT.lua obj/128x64/KissSP.lua
+	cp tmp/480x272_SPORT.lua obj/480x272/KissSP.lua
+
+	cp tmp/212x64_CF.lua obj/212x64/KissCF.lua
+	cp tmp/128x64_CF.lua obj/128x64/KissCF.lua
+	cp tmp/480x272_CF.lua obj/480x272/KissCF.lua
 
 
-	cp tmp/X9CF.lua obj/X9/KissCF.lua
-	cp tmp/X7CF.lua obj/X7/KissCF.lua
-	cp tmp/X-LiteCF.lua obj/KissCF.lua
-	cp tmp/HorusCF.lua obj/Horus/KissCF.lua
-
-
-	cp -R src/X7/KISS obj/X7/KISS
-	cp -R src/X7/KISS obj/X-Lite/KISS
-	cp -R src/X9/KISS obj/X9/KISS
-	cp -R src/Horus/KISS obj/Horus/KISS
+	cp -R src/212x64/KISS obj/212x64/KISS
+	cp -R src/128x64/KISS obj/128x64/KISS
+	cp -R src/480x272/KISS obj/480x272/KISS
 
 	find ./obj/ -type f -name '*.lua' -exec sh -c 'node node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
 		
 .PHONY: zip
 zip: 
 	test -d dist || mkdir dist
-	cd obj/X9/; zip -r ../../dist/kiss-x9-lua-scripts-${VERSION}-${GIT_HASH}.zip *
-	cd obj/X7/; zip -r ../../dist/kiss-x7-lua-scripts-${VERSION}-${GIT_HASH}.zip *
-	cd obj/X-Lite/; zip -r ../../dist/kiss-x_lite-lua-scripts-${VERSION}-${GIT_HASH}.zip *
-	cd obj/Horus/; zip -r ../../dist/kiss-horus-lua-scripts-${VERSION}-${GIT_HASH}.zip *
+	cd obj/212x64/; zip -r ../../dist/kiss-212x64-lua-scripts-${VERSION}.zip *
+	cd obj/128x64/; zip -r ../../dist/kiss-128x64-lua-scripts-${VERSION}.zip *
+	cd obj/480x272/; zip -r ../../dist/kiss-480x272-lua-scripts-${VERSION}.zip *
 	
 .PHONY: dist
 dist:   clean prepare luatmp lua zip

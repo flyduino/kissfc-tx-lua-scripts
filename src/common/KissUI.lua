@@ -1,4 +1,3 @@
-
 -- BEGIN UI
 
 local currentPage = 1
@@ -271,11 +270,11 @@ local function run(event)
    end
 
    -- navigation
-    if event == EVT_MENU_LONG or event == EVT_SHIFT_LONG then
+    if event == EVT_VIRTUAL_MENU_LONG or event == EVT_SHIFT_LONG then
       menuActive = 1
       gState = MENU_DISP
 
-   elseif EVT_PAGEUP_FIRST and event == EVT_ENTER_LONG then
+   elseif EVT_PAGEUP_FIRST and event == EVT_VIRTUAL_ENTER_LONG then
       menuActive = 1
       killEnterBreak = 1
       gState = MENU_DISP
@@ -284,12 +283,12 @@ local function run(event)
    elseif gState == MENU_DISP then
       if event == EVT_EXIT_BREAK then
          gState = PAGE_DISPLAY
-      elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT or event == EVT_UP_BREAK then
+      elseif event == EVT_VIRTUAL_PREV then
          incMenu(-1)
-      elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT or event == EVT_DOWN_BREAK then
+      elseif event == EVT_VIRTUAL_NEXT then
          incMenu(1)
       elseif event == EVT_ENTER_BREAK then
-      	if RADIO == "HORUS" then
+      	if RADIO == "480x272" then
       		if killEnterBreak == 1 then
             	killEnterBreak = 0
          	else
@@ -303,15 +302,15 @@ local function run(event)
       end
    -- normal page viewing
    elseif gState <= PAGE_DISPLAY then
-   	  if event == EVT_PAGEUP_FIRST or event == EVT_LEFT_BREAK then
+   	  if event == EVT_VIRTUAL_PREV_PAGE then
          incPage(-1)
-      elseif event == EVT_MENU_BREAK or event == EVT_PAGEDN_FIRST or event == EVT_RIGHT_BREAK then
+      elseif event == EVT_VIRTUAL_NEXT_PAGE then
          incPage(1)
-      elseif event == EVT_PLUS_BREAK or event == EVT_ROT_LEFT or event == EVT_UP_BREAK then
+      elseif event == EVT_VIRTUAL_PREV or event == EVT_VIRTUAL_PREV_REPT then
          incLine(-1)
-      elseif event == EVT_MINUS_BREAK or event == EVT_ROT_RIGHT or event == EVT_DOWN_BREAK then
+      elseif event == EVT_VIRTUAL_NEXT or event == EVT_VIRTUAL_NEXT_REPT then
          incLine(1)
-      elseif event == EVT_ENTER_BREAK then
+      elseif event == EVT_VIRTUAL_ENTER  then
          local field = ActivePage.fields[currentLine]
          local idx = field.i or currentLine
          if ActivePage.values and ActivePage.values[idx] and (field.ro ~= true) then
@@ -320,15 +319,15 @@ local function run(event)
       end
    -- editing value
    elseif gState == EDITING then
-      if (event == EVT_EXIT_BREAK) or (event == EVT_ENTER_BREAK) then
+      if event == EVT_VIRTUAL_EXIT or event == EVT_VIRTUAL_ENTER then
          gState = PAGE_DISPLAY
-      elseif event == EVT_PLUS_FIRST or event == EVT_ROT_RIGHT or event == EVT_UP_BREAK then
+      elseif event == EVT_VIRTUAL_INC then
          incValue(1)
-      elseif event == EVT_PLUS_REPT or event == EVT_RIGHT_BREAK then
+      elseif event == EVT_VIRTUAL_INC_REP then
          incValue(10)
-      elseif event == EVT_MINUS_FIRST or event == EVT_ROT_LEFT or event == EVT_DOWN_BREAK then
+      elseif event == EVT_VIRTUAL_DEC then
          incValue(-1)
-      elseif event == EVT_MINUS_REPT or event == EVT_LEFT_BREAK then
+      elseif event == EVT_VIRTUAL_DEC_REPT then
 		 incValue(-10)
       end
    end
