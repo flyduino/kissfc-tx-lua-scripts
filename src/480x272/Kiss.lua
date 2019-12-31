@@ -3,7 +3,6 @@
 local RADIO = '480x272'
 
 local drawScreenTitle = function(title, currentPage, totalPages)
-    lcd.drawScreenTitle('KISS: ' .. title, currentPage, totalPages)
     lcd.drawFilledRectangle(0, 0, LCD_W, 30, TITLE_BGCOLOR)
     lcd.drawText(1, 5, title, MENU_TITLE_COLOR)
 end
