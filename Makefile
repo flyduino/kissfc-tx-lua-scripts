@@ -47,6 +47,8 @@ lua:
 	cp -R src/128x64/KISS obj/128x64/KISS
 	cp -R src/480x272/KISS obj/480x272/KISS
 
+.PHONY: luamin
+luamin:
 	find ./obj/ -type f -name '*.lua' -exec sh -c 'node node_modules/luamin/bin/luamin --file {} > {}.tmp' \; -exec sh -c 'mv {}.tmp {} ' \;
 		
 .PHONY: zip
@@ -57,5 +59,6 @@ zip:
 	cd obj/480x272/; zip -r ../../dist/kiss-480x272-lua-scripts-${VERSION}.zip *
 	
 .PHONY: dist
-dist:   clean prepare luatmp lua zip
-
+dist: clean prepare luatmp lua luamin zip
+.PHONY: debug
+debug: clean prepare luatmp lua 
