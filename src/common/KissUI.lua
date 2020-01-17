@@ -6,6 +6,7 @@ local saveTS = 0
 local saveTimeout = 0
 local saveRetries = 0
 local saveMaxRetries = 0
+local killEnterBreak = 0
 
 local REQ_TIMEOUT = 200 -- 1000ms request timeout
 
@@ -284,14 +285,14 @@ local function run(event)
             incMenu(-1)
         elseif event == EVT_VIRTUAL_NEXT then
             incMenu(1)
-        elseif event == EVT_ENTER_BREAK then
+        elseif event == EVT_VIRTUAL_ENTER then
             if RADIO == '480x272' then
-                if killEnterBreak == 1 then
-                    killEnterBreak = 0
-                else
-                    gState = PAGE_DISPLAY
-                    menuList[menuActive].f()
-                end
+            if killEnterBreak == 1 then
+                killEnterBreak = 0
+            else
+                gState = PAGE_DISPLAY
+                menuList[menuActive].f()
+            end
             else
                 gState = PAGE_DISPLAY
                 menuList[menuActive].f()

@@ -6,6 +6,7 @@
 -- Kiss version by Alex Fedorov aka FedorComander
 
 -- SPORT BEGIN
+local toolName = "TNS|KISS SPort|TNE"
 
 SPORT_KISS_VERSION = bit32.lshift(1, 5)
 SPORT_KISS_STARTFLAG = bit32.lshift(1, 4)

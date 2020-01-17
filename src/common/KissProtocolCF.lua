@@ -2,6 +2,8 @@
 -- KISS/CF code
 -- Kiss version by Alex Fedorov aka FedorComander
 
+local toolName = "TNS|KISS Crossfire|TNE"
+
 LOCAL_DEVICE_ID = 0xEA -- transmitter
 REMOTE_DEVICE_ID = 0xC8 -- flight controller
 
