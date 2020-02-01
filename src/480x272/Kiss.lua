@@ -4,7 +4,8 @@ local RADIO = '480x272'
 
 local drawScreenTitle = function(title, currentPage, totalPages)
     lcd.drawFilledRectangle(0, 0, LCD_W, 30, TITLE_BGCOLOR)
-    lcd.drawText(1, 5, title, MENU_TITLE_COLOR)
+        lcd.drawText(1, 5, title, MENU_TITLE_COLOR)
+        lcd.drawText(LCD_W - 50, 5, currentPage .. '/' .. totalPages, MENU_TITLE_COLOR)
 end
 
 local drawTelemetry = function()

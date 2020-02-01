@@ -269,17 +269,17 @@ local function run(event)
     end
 
     -- navigation
-    if event == EVT_VIRTUAL_MENU_LONG or event == EVT_SHIFT_LONG then
+    if event == EVT_VIRTUAL_MENU_LONG then
         menuActive = 1
         gState = MENU_DISP
-    elseif EVT_PAGEUP_FIRST and event == EVT_VIRTUAL_ENTER_LONG then
+    elseif event == EVT_VIRTUAL_ENTER_LONG then
         -- menu is currently displayed
         menuActive = 1
         killEnterBreak = 1
         gState = MENU_DISP
     elseif gState == MENU_DISP then
         -- normal page viewing
-        if event == EVT_EXIT_BREAK then
+        if event == EVT_VIRTUAL_EXIT then
             gState = PAGE_DISPLAY
         elseif event == EVT_VIRTUAL_PREV then
             incMenu(-1)
