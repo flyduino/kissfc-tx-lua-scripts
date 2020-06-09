@@ -320,7 +320,7 @@ local function run(event)
             gState = PAGE_DISPLAY
         elseif event == EVT_VIRTUAL_INC then
             incValue(1)
-        elseif event == EVT_VIRTUAL_INC_REP then
+        elseif event == EVT_VIRTUAL_INC_REPT then
             incValue(10)
         elseif event == EVT_VIRTUAL_DEC then
             incValue(-1)
