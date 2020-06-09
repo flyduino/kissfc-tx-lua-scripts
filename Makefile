@@ -1,5 +1,5 @@
 
-VERSION = 1.0.0
+VERSION = 1.0.1
 GIT_HASH = $(shell git log -1 --pretty=format:"%h")
 
 .PHONY: all
